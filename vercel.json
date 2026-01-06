@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "builds": [
     {
       "src": "index.html",
@@ -7,5 +8,11 @@
   ],
   "env": {
     "BUILD_STEP": "no build"
-  }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
 }
