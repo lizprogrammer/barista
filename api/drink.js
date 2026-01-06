@@ -1,21 +1,35 @@
+// File: api/drink.js
 module.exports = async function handler(req, res) {
   try {
+    // Allow Farcaster iframe access (same as Helia)
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    // Only allow GET requests
+    if (req.method !== "GET") {
+      return res.status(405).json({ error: "Method not allowed" });
+    }
+
+    // Read Groq key from Vercel environment variable
     const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) {
       return res.status(500).json({ error: "Missing GROQ_API_KEY" });
     }
 
-    // Build your dynamic prompt
+    // ----- PROMPT DEFINITIONS -----
     const today = new Date().toLocaleDateString("en-US", { 
-      weekday: "long", 
-      month: "long", 
-      day: "numeric" 
+      weekday: "long",
+      month: "long",
+      day: "numeric"
     });
+
     const hour = new Date().getHours();
-    const timeOfDay = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
+    const timeOfDay =
+      hour < 12 ? "morning" :
+      hour < 17 ? "afternoon" :
+      "evening";
 
     const systemPrompt = `
-You are a sassy, creative, enthusiastic barista. 
+You are a sassy, creative, enthusiastic barista.
 Generate a unique, delicious coffee drink recommendation.
 Include:
 - a catchy drink name
@@ -32,17 +46,17 @@ Keep it fun, vivid, and 2–3 sentences.
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`
       },
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
         messages: [
           { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt },
+          { role: "user", content: userPrompt }
         ],
         temperature: 0.9,
-        max_tokens: 150,
-      }),
+        max_tokens: 150
+      })
     });
 
     if (!response.ok) {
