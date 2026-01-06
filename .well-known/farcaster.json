@@ -1,16 +1,16 @@
 {
   "frame": {
-    "name": "Barista Mini App",
-    "homeUrl": "https://barista-chi.vercel.app",
-    "iconUrl": "https://barista-chi.vercel.app/icon.png",
+    "name": "Barista",
     "version": "1",
-    "imageUrl": "https://barista-chi.vercel.app/coffee.png",
-    "subtitle": "Your cosmic coffee guide.",
-    "webhookUrl": "https://barista-chi.vercel.app/api/drink",
-    "description": "A playful barista who brews the perfect drink.",
-    "splashImageUrl": "https://barista-chi.vercel.app/coffee.png",
-    "primaryCategory": "social",
-    "splashBackgroundColor": "#F5E6D3"
+    "iconUrl": "https://barista-lilac.vercel.app/icon.png",
+    "homeUrl": "https://barista-lilac.vercel.app",
+    "imageUrl": "https://barista-lilac.vercel.app/image.png",
+    "splashImageUrl": "https://barista-lilac.vercel.app/icon.png",
+    "splashBackgroundColor": "#F5E6D3",
+    "webhookUrl": "https://barista-lilac.vercel.app/api/webhook",
+    "subtitle": "Barista",
+    "description": "Barista",
+    "primaryCategory": "social"
   },
   "accountAssociation": {
     "header": "eyJmaWQiOjIxMDI1OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDA4NUVlNjgxZTI1NEFhRjg3MzM4NjhjQmQ4OWEyQTljNDU2QTE3NkIifQ",
