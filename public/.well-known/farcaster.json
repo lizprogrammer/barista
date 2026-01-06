@@ -6,10 +6,15 @@
     "homeUrl": "https://barista-chi.vercel.app",
     "imageUrl": "https://barista-chi.vercel.app/public/coffee.png",
     "splashImageUrl": "https://barista-chi.vercel.app/public/coffee.png",
-    "splashBackgroundColor": " #2E1C13",
+    "splashBackgroundColor": "#2E1C13",
     "webhookUrl": "https://barista-chi.vercel.app/api/webhook",
-    "primaryCategory": "social",
+    "subtitle": "Barista",
     "description": "Barista",
-    "subtitle": "Barista"
+    "primaryCategory": "social"
+  },
+  "accountAssociation": {
+    "header": "eyJmaWQiOjIxMDI1OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDA4NUVlNjgxZTI1NEFhRjg3MzM4NjhjQmQ4OWEyQTljNDU2QTE3NkIifQ",
+    "payload": "eyJkb21haW4iOiJiYXJpc3RhLWNoaS52ZXJjZWwuYXBwIn0",
+    "signature": "c2QHdtRDuBwqWN+bsSWL6UpPizRlTvqoM2UKFgiowyE0tGbT2lFukUZsrezcej2OMsODpWNtkVCaj9M2CaxENBs="
   }
 }
