@@ -1,0 +1,11 @@
+{
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "env": {
+    "BUILD_STEP": "no build"
+  }
+}
