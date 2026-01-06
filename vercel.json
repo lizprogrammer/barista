@@ -1,9 +1,23 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "/public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
   "redirects": [
     {
       "source": "/.well-known/farcaster.json",
       "destination": "https://api.farcaster.xyz/miniapps/hosted-manifest/019b93c6-8eac-9762-51ad-5cbdce051867",
       "permanent": false
     }
-  ]
+  ],
+  "env": {
+    "BUILD_STEP": "no build"
+  }
 }
