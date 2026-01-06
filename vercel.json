@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "/public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "env": {
+    "BUILD_STEP": "no build"
+  }
+}
