@@ -3,6 +3,6 @@
   "description": "A simple app for coffee lovers!",
   "version": "1.0.0",
   "author": "@lizrosso",
-  "icon": "coffee.png",  // Your coffee mug icon (place it in the same directory)
+  "icon": "/public/coffee.png",  // Your coffee mug icon (place it in the same directory)
   "entry": "index.html"       // The entry point of the app, this is your HTML file
 }
