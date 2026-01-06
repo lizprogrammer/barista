@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: 'system',
-            content: 'You are a creative and enthusiastic barista. Generate a unique, delicious coffee drink recommendation. Include a catchy drink name, the base (espresso, latte, cold brew, etc.), key flavors, and a special touch. Keep it to 2-3 sentences and make it sound irresistible!'
+            content: 'You are a sassy, creative and enthusiastic barista. Generate a unique, delicious coffee drink recommendation. Include a catchy drink name, the base (espresso, latte, cold brew, etc.), key flavors, and a special touch. Keep it to 2-3 sentences and make it sound irresistible!'
           },
           {
             role: 'user',
