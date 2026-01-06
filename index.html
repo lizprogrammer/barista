@@ -2,96 +2,213 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Barista Mini App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Barista App</title>
+
+  <!-- Farcaster Mini App Metadata -->
+  <meta name="fc:miniapp" content='{
+    "version":"1",
+    "imageUrl":"https://barista-chi.vercel.app/coffee.png",
+    "button":{
+      "title":"Coffee Time",
+      "action":{
+        "type":"launch_miniapp",
+        "name":"Barista App",
+        "url":"https://barista-chi.vercel.app",
+        "splashImageUrl":"https://barista-chi.vercel.app/coffee.png",
+        "splashBackgroundColor":"#6F4E37"
+      }
+    }
+  }' />
+
+  <meta name="fc:frame" content='{
+    "version":"1",
+    "imageUrl":"https://barista-chi.vercel.app/coffee.png",
+    "button":{
+      "title":"Coffee Time",
+      "action":{
+        "type":"launch_frame",
+        "name":"Barista App",
+        "url":"https://barista-chi.vercel.app",
+        "splashImageUrl":"https://barista-chi.vercel.app/coffee.png",
+        "splashBackgroundColor":"#6F4E37"
+      }
+    }
+  }' />
 
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: sans-serif;
-      padding: 20px;
+      background: linear-gradient(135deg, #6F4E37 0%, #3E2723 100%);
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 60px 20px 20px;
       text-align: center;
     }
-    #overlay {
+
+    .logo {
+      margin-bottom: 16px;
+      font-size: 80px;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-bottom: 24px;
+    }
+
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 14px 16px 18px;
+      background: linear-gradient(to top, rgba(62, 39, 35, 0.95) 60%, transparent);
+    }
+
+    button {
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto;
+      display: block;
+      background: #FFB74D;
+      color: #3E2723;
+      border: none;
+      border-radius: 999px;
+      padding: 14px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    button:active { transform: scale(0.97); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: flex;
+      background: rgba(0,0,0,0.7);
+      display: none;
       align-items: center;
       justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-    #overlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    #modal {
-      background: white;
       padding: 20px;
-      border-radius: 12px;
-      max-width: 320px;
-      text-align: left;
+      z-index: 100;
     }
+
+    .overlay.show { display: flex; }
+
+    .drink-card {
+      background: linear-gradient(180deg, #4A3428, #3E2723);
+      border-radius: 18px;
+      padding: 24px;
+      border: 2px solid rgba(255, 183, 77, 0.3);
+      max-width: 380px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .drink-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+      margin-bottom: 12px;
+      color: #FFB74D;
+    }
+
+    .drink-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      font-weight: 400;
+      color: #fff;
+    }
+
     #error {
-      color: red;
-      margin-top: 10px;
-      font-size: 0.9rem;
+      color: #ff7777;
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: 8px;
     }
   </style>
 </head>
 
 <body>
+  <div class="app">
+    <div class="logo">☕</div>
+    <h1>Coffee Time</h1>
+    <div class="subtitle">Your AI-powered barista</div>
+  </div>
 
-  <h1 id="title">Your Perfect Coffee</h1>
-  <button onclick="generate()">Brew My Drink</button>
-
-  <div id="overlay">
-    <div id="modal">
-      <p id="message">Brewing…</p>
-      <p id="error"></p>
+  <div id="overlay" class="overlay">
+    <div class="drink-card">
+      <div class="drink-label">Your Custom Drink</div>
+      <div id="drink" class="drink-text">Brewing your perfect drink...</div>
     </div>
   </div>
 
-  <script>
-    // Set dynamic title like your Helia app
-    const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
-    document.getElementById("title").textContent = "Happy " + today + " — Let's Brew";
+  <div class="bottom-bar">
+    <button id="orderBtn">Get My Drink Recommendation</button>
+    <div id="error"></div>
+  </div>
 
-    async function generate() {
-      const overlay = document.getElementById("overlay");
-      const messageEl = document.getElementById("message");
-      const errorEl = document.getElementById("error");
+  <script type="module">
+    import { sdk } from 'https://esm.sh/@farcaster/miniapp-sdk';
 
-      messageEl.textContent = "Brewing your drink…";
-      errorEl.textContent = "";
-      overlay.classList.add("show");
+    sdk.actions.ready();
+
+    document.getElementById('orderBtn').addEventListener('click', async () => {
+      const drinkEl = document.getElementById('drink');
+      const overlay = document.getElementById('overlay');
+      const errorEl = document.getElementById('error');
+      const btn = document.getElementById('orderBtn');
+
+      drinkEl.textContent = 'Brewing your perfect drink...';
+      overlay.classList.add('show');
+      btn.disabled = true;
+      errorEl.textContent = '';
 
       try {
-        const res = await fetch("/api/drink");
-        const data = await res.json();
+        const res = await fetch('/api/drink');
+        const text = await res.text();
+        const data = JSON.parse(text);
 
         if (data.drink) {
-          messageEl.textContent = data.drink;
+          drinkEl.textContent = data.drink;
+        } else if (data.error) {
+          drinkEl.textContent = 'Error: ' + data.error;
         } else {
-          messageEl.textContent = "No drink generated.";
+          drinkEl.textContent = 'Our barista is taking a break. Try again soon!';
         }
       } catch (err) {
-        messageEl.textContent = "Something went wrong.";
-        errorEl.textContent = err.message;
+        drinkEl.textContent = 'Oops! Our espresso machine hiccuped.';
+        errorEl.textContent = 'Error: ' + err.message;
+      } finally {
+        btn.disabled = false;
       }
-    }
-
-    // Close modal on click (same pattern as Helia)
-    document.getElementById("overlay").addEventListener("click", () => {
-      document.getElementById("overlay").classList.remove("show");
     });
 
-    // Farcaster Mini App ready
-    if (window.sdk?.actions?.ready) {
-      sdk.actions.ready();
-    }
+    document.getElementById('overlay').addEventListener('click', e => {
+      if (e.target === e.currentTarget) {
+        e.currentTarget.classList.remove('show');
+      }
+    });
   </script>
-
 </body>
 </html>
