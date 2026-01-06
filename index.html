@@ -3,86 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta property="fc:frame" content="vNext" />
   <title>Barista App</title>
-  <link rel="icon" href="/public/coffee.png" /> <!-- Link to your coffee mug icon -->
-
-  <!-- Include Farcaster SDK -->
-  <script src="https://cdn.farcaster.xyz/sdk/v1"></script>
-
+  <link rel="icon" href="coffee.png" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
       background: #f9fafb;
       color: #222;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 20px;
-      text-align: center;
+      padding: 20px 15px;
     }
+    .app { width: 100%; max-width: 420px; display:flex; flex-direction:column; }
 
-    .app {
-      max-width: 420px;
-      text-align: center;
-    }
+    .logo { display: flex; justify-content: center; margin-bottom: 12px; }
+    .logo img { width: 56px; height: 56px; border-radius: 12px; object-fit: contain; }
 
-    .logo {
-      margin-bottom: 16px;
-    }
+    h1 { font-weight: 700; font-size: 1.5rem; text-align:center; margin-bottom:6px; color:#111; }
+    .subtitle { font-weight:400; font-size:0.95rem; color:#555; text-align:center; margin-bottom:18px; }
 
-    .logo img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-    }
+    .card { background:#fff; border-radius:14px; padding:14px 18px; margin-bottom:18px; border:1px solid #ddd; box-shadow:0 1px 4px rgb(0 0 0 / 0.05); }
 
-    h1 {
-      font-weight: 700;
-      font-size: 2rem;
-      color: #374151;
-    }
+    label { display:block; font-size:0.82rem; font-weight:600; color:#555; margin-bottom:6px; }
+    select { width:100%; padding:9px 12px; font-size:1rem; border-radius:12px; border:1px solid #ccc; background:#fafafa; margin-bottom:14px; }
+    select:focus { outline:none; border-color:#4a90e2; background:#fff; }
 
-    .footer {
-      text-align: center;
-      font-weight: 500;
-      font-size: 0.85rem;
-      color: #666;
-      margin-top: 20px;
-    }
+    button { width:100%; padding:12px 0; font-weight:700; font-size:1rem; color:#fff; background:#374151; border:none; border-radius:9999px; cursor:pointer; margin-top:6px; }
+    button:hover { background:#2c3654; }
+    button:active { background:#1f2937; }
+
+    .result { display:none; margin-bottom:12px; }
+    .result h2 { font-weight:700; font-size:1.2rem; margin-bottom:6px; color:#222; text-align:center; }
+    .result p { font-weight:400; font-size:0.95rem; margin-bottom:10px; color:#444; text-align:center; }
+
+    #castText { width:100%; height:80px; font-size:0.9rem; padding:8px; margin-top:6px; border-radius:10px; border:1px solid #ccc; resize:none; display:none; }
+
+    .footer { text-align:center; font-weight:500; font-size:0.85rem; color:#666; margin-top:auto; margin-bottom:12px; }
   </style>
 </head>
 
 <body>
   <div class="app">
-    <!-- Coffee Mug Icon -->
     <div class="logo">
-      <img src="/public/coffee.png" alt="Coffee Mug Icon" />
+      <img src="coffee.png" alt="Mood Brew icon" />
     </div>
 
-    <!-- Coffee Time Text -->
-    <h1>Coffee Time</h1>
+    <h1>Barista App</h1>
+    <div class="subtitle">Coffee Time!</div>
 
-    <div class="footer">Powered by Farcaster</div>
+    <button id="recommendBtn">Get My Coffee!</button>
   </div>
 
   <script>
-    // Initialize Farcaster SDK
-    document.addEventListener("DOMContentLoaded", () => {
+    // Function to check if Farcaster SDK is loaded and then call ready()
+    function waitForSDK() {
       if (window.sdk && sdk.actions) {
-        sdk.actions.ready();
-      } else {
-        setTimeout(() => {
-          sdk.actions.ready();
-        }, 50); // Retry if SDK isn't ready immediately
+        sdk.actions.ready();  // Call this to signal that the app is ready
+        return;
       }
+      setTimeout(waitForSDK, 50);  // Retry after 50ms if not loaded yet
+    }
+
+    // Wait for SDK to be available before calling ready()
+    document.addEventListener("DOMContentLoaded", () => {
+      // Ensure SDK is ready before calling `ready()`
+      waitForSDK();
+
+      // Add event listener for the button click
+      const recommendBtn = document.getElementById("recommendBtn");
+      recommendBtn.addEventListener("click", () => {
+        alert("Coffee Time!");
+      });
     });
   </script>
+
+  <!-- Farcaster SDK -->
+  <script src="https://cdn.farcaster.xyz/sdk/v1"></script>
 </body>
 </html>
