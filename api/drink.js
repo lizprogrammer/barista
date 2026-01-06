@@ -32,7 +32,7 @@ export default async function handler(req, res) {
           },
           {
             role: 'user',
-            content: `It's ${timeOfDay} on ${today}. Recommend me a perfect coffee drink!`
+            content: `It's ${timeOfDay} on ${today}. Recommend me an awesomely perfect coffee drink!`
           }
         ],
         temperature: 0.9,
