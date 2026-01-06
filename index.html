@@ -73,15 +73,19 @@
   </div>
 
   <script>
-    // Initialize Farcaster SDK
+    // Ensure Farcaster SDK is fully loaded and ready
     document.addEventListener("DOMContentLoaded", () => {
-      if (window.sdk && sdk.actions) {
-        sdk.actions.ready();
-      } else {
-        setTimeout(() => {
-          sdk.actions.ready();
-        }, 50); // Retry if SDK isn't ready immediately
+      // Wait for SDK to be fully available
+      function waitForSDK() {
+        if (window.sdk && sdk.actions) {
+          sdk.actions.ready();  // Signal that the app is ready
+        } else {
+          setTimeout(waitForSDK, 50); // Retry after 50ms
+        }
       }
+
+      // Call waitForSDK to ensure the SDK is ready
+      waitForSDK();
     });
   </script>
 </body>
