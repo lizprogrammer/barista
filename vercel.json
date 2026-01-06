@@ -10,6 +10,12 @@
       "use": "@vercel/static"
     }
   ],
+  "routes": [
+    {
+      "src": "/.well-known/farcaster.json",
+      "dest": "/.well-known/farcaster.json"
+    }
+  ],
   "env": {
     "BUILD_STEP": "no build"
   }
