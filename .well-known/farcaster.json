@@ -1,8 +1,15 @@
 {
-  "name": "Barista App",
-  "description": "A simple app for coffee lovers!",
-  "version": "1.0.0",
-  "author": "@lizrosso",
-  "icon": "/public/coffee.png",  // Your coffee mug icon (place it in the same directory)
-  "entry": "index.html"       // The entry point of the app, this is your HTML file
+  "frame": {
+    "name": "Barista",
+    "version": "1",
+    "iconUrl": "https://barista-chi.vercel.app/public/icon.png",
+    "homeUrl": "https://barista-chi.vercel.app",
+    "imageUrl": "https://barista-chi.vercel.app/public/coffee.png",
+    "splashImageUrl": "https://barista-chi.vercel.app/public/coffee.png",
+    "splashBackgroundColor": " #2E1C13",
+    "webhookUrl": "https://barista-chi.vercel.app/api/webhook",
+    "primaryCategory": "social",
+    "description": "Barista",
+    "subtitle": "Barista"
+  }
 }
