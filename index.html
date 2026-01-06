@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta property="fc:frame" content="vNext" />
   <title>Barista App</title>
-  <link rel="icon" href="/public/coffee.png" /> <!-- Link to your coffee mug icon -->
-
-  <!-- Include Farcaster SDK -->
-  <script src="https://cdn.farcaster.xyz/sdk/v1"></script>
-
+  
+  <meta name="fc:miniapp" content='{"version":"1","imageUrl":"https://your-deployment-url.vercel.app/coffee.png","button":{"title":"Coffee Time","action":{"type":"launch_miniapp","name":"Barista App","url":"https://your-deployment-url.vercel.app","splashImageUrl":"https://your-deployment-url.vercel.app/coffee.png","splashBackgroundColor":"#6F4E37"}}}' />
+  <meta name="fc:frame" content='{"version":"1","imageUrl":"https://your-deployment-url.vercel.app/coffee.png","button":{"title":"Coffee Time","action":{"type":"launch_frame","name":"Barista App","url":"https://your-deployment-url.vercel.app","splashImageUrl":"https://your-deployment-url.vercel.app/coffee.png","splashBackgroundColor":"#6F4E37"}}}' />
+  
   <style>
     * {
       box-sizing: border-box;
@@ -27,28 +25,19 @@
       padding: 20px;
       text-align: center;
     }
-
     .app {
       max-width: 420px;
       text-align: center;
     }
-
     .logo {
       margin-bottom: 16px;
+      font-size: 80px;
     }
-
-    .logo img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-    }
-
     h1 {
       font-weight: 700;
       font-size: 2rem;
       color: #374151;
     }
-
     .footer {
       text-align: center;
       font-weight: 500;
@@ -56,37 +45,43 @@
       color: #666;
       margin-top: 20px;
     }
+    .status {
+      margin-top: 16px;
+      padding: 10px;
+      background: #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.875rem;
+    }
   </style>
 </head>
-
 <body>
   <div class="app">
-    <!-- Coffee Mug Icon -->
-    <div class="logo">
-      <img src="/public/coffee.png" alt="Coffee Mug Icon" />
-    </div>
-
-    <!-- Coffee Time Text -->
+    <div class="logo">☕</div>
     <h1>Coffee Time</h1>
-
+    <div id="status" class="status">Loading...</div>
     <div class="footer">Powered by Farcaster</div>
   </div>
 
-  <script>
-    // Ensure Farcaster SDK is fully loaded and ready
-    document.addEventListener("DOMContentLoaded", () => {
-      // Wait for SDK to be fully available
-      function waitForSDK() {
-        if (window.sdk && sdk.actions) {
-          sdk.actions.ready();  // Signal that the app is ready
-        } else {
-          setTimeout(waitForSDK, 50); // Retry after 50ms
-        }
-      }
+  <script type="module">
+    import { sdk } from 'https://esm.sh/@farcaster/miniapp-sdk';
 
-      // Call waitForSDK to ensure the SDK is ready
-      waitForSDK();
-    });
+    const statusEl = document.getElementById('status');
+
+    try {
+      statusEl.textContent = 'Connected! Ready for coffee ☕';
+      statusEl.style.background = '#d1fae5';
+      statusEl.style.color = '#065f46';
+      
+      // Signal that the app is ready
+      sdk.actions.ready();
+      
+      console.log('Barista app initialized successfully');
+    } catch (error) {
+      statusEl.textContent = 'Error: ' + error.message;
+      statusEl.style.background = '#fee2e2';
+      statusEl.style.color = '#991b1b';
+      console.error('Initialization error:', error);
+    }
   </script>
 </body>
 </html>
