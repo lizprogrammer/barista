@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Barista App</title>
 
-  <!-- Farcaster Mini App Metadata -->
   <meta name="fc:miniapp" content='{
     "version":"1",
     "imageUrl":"https://barista-chi.vercel.app/coffee.png",
@@ -43,34 +42,82 @@
       background: linear-gradient(135deg, #6F4E37 0%, #3E2723 100%);
       color: #fff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 120px;
     }
 
     .app {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding: 60px 20px 20px;
+      padding: 40px 20px 20px;
       text-align: center;
     }
 
     .logo {
-      margin-bottom: 16px;
-      font-size: 80px;
+      margin-bottom: 12px;
+      font-size: 64px;
     }
 
     h1 {
       font-weight: 700;
-      font-size: 2rem;
-      margin-bottom: 8px;
+      font-size: 1.8rem;
+      margin-bottom: 6px;
     }
 
     .subtitle {
-      font-size: 1rem;
+      font-size: 0.9rem;
       opacity: 0.85;
       margin-bottom: 24px;
+    }
+
+    .options-container {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .option-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.9;
+      color: #FFB74D;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 183, 77, 0.3);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #FFB74D;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    select option {
+      background: #3E2723;
+      color: #fff;
     }
 
     .bottom-bar {
@@ -79,7 +126,7 @@
       left: 0;
       right: 0;
       padding: 14px 16px 18px;
-      background: linear-gradient(to top, rgba(62, 39, 35, 0.95) 60%, transparent);
+      background: linear-gradient(to top, rgba(62, 39, 35, 0.98) 70%, transparent);
     }
 
     button {
@@ -104,7 +151,7 @@
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.8);
       display: none;
       align-items: center;
       justify-content: center;
@@ -119,9 +166,11 @@
       border-radius: 18px;
       padding: 24px;
       border: 2px solid rgba(255, 183, 77, 0.3);
-      max-width: 380px;
+      max-width: 400px;
       width: 100%;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      max-height: 80vh;
+      overflow-y: auto;
     }
 
     .drink-label {
@@ -133,10 +182,40 @@
       color: #FFB74D;
     }
 
+    .drink-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #FFB74D;
+    }
+
     .drink-text {
-      font-size: 1.1rem;
+      font-size: 1rem;
       line-height: 1.6;
       font-weight: 400;
+      color: #fff;
+      white-space: pre-line;
+    }
+
+    .order-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 183, 77, 0.2);
+    }
+
+    .order-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+      margin-bottom: 8px;
+      color: #FFB74D;
+    }
+
+    .order-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.5;
       color: #fff;
     }
 
@@ -154,12 +233,47 @@
     <div class="logo">☕</div>
     <h1>Coffee Time</h1>
     <div class="subtitle">Your AI-powered barista</div>
+
+    <div class="options-container">
+      <div class="option-group">
+        <label class="option-label">Beverage Type</label>
+        <select id="drinkType">
+          <option value="coffee">Coffee</option>
+          <option value="tea">Tea</option>
+        </select>
+      </div>
+
+      <div class="option-group">
+        <label class="option-label">Temperature</label>
+        <select id="temperature">
+          <option value="hot">Hot</option>
+          <option value="iced">Iced</option>
+        </select>
+      </div>
+
+      <div class="option-group">
+        <label class="option-label">Your Mood</label>
+        <select id="mood">
+          <option value="energetic">Energetic & Ready</option>
+          <option value="cozy">Cozy & Relaxed</option>
+          <option value="adventurous">Adventurous & Bold</option>
+          <option value="focused">Focused & Productive</option>
+          <option value="indulgent">Indulgent & Treat Yourself</option>
+          <option value="refreshed">Refreshed & Light</option>
+        </select>
+      </div>
+    </div>
   </div>
 
   <div id="overlay" class="overlay">
     <div class="drink-card">
-      <div class="drink-label">Your Custom Drink</div>
+      <div class="drink-label">Your Perfect Drink</div>
+      <div id="drinkName" class="drink-name"></div>
       <div id="drink" class="drink-text">Brewing your perfect drink...</div>
+      <div class="order-section" id="orderSection" style="display: none;">
+        <div class="order-label">Order at the Counter</div>
+        <div id="order" class="order-text"></div>
+      </div>
     </div>
   </div>
 
@@ -175,28 +289,45 @@
 
     document.getElementById('orderBtn').addEventListener('click', async () => {
       const drinkEl = document.getElementById('drink');
+      const drinkNameEl = document.getElementById('drinkName');
+      const orderEl = document.getElementById('order');
+      const orderSection = document.getElementById('orderSection');
       const overlay = document.getElementById('overlay');
       const errorEl = document.getElementById('error');
       const btn = document.getElementById('orderBtn');
 
+      // Get user selections
+      const drinkType = document.getElementById('drinkType').value;
+      const temperature = document.getElementById('temperature').value;
+      const mood = document.getElementById('mood').value;
+
       drinkEl.textContent = 'Brewing your perfect drink...';
+      drinkNameEl.textContent = '';
+      orderSection.style.display = 'none';
       overlay.classList.add('show');
       btn.disabled = true;
       errorEl.textContent = '';
 
       try {
-        const res = await fetch('/api/drink');
+        const params = new URLSearchParams({ drinkType, temperature, mood });
+        const res = await fetch(`/api/drink?${params}`);
         const text = await res.text();
         const data = JSON.parse(text);
 
-        if (data.drink) {
-          drinkEl.textContent = data.drink;
+        if (data.drinkName && data.description && data.order) {
+          drinkNameEl.textContent = data.drinkName;
+          drinkEl.textContent = data.description;
+          orderEl.textContent = data.order;
+          orderSection.style.display = 'block';
         } else if (data.error) {
+          drinkNameEl.textContent = '';
           drinkEl.textContent = 'Error: ' + data.error;
         } else {
+          drinkNameEl.textContent = '';
           drinkEl.textContent = 'Our barista is taking a break. Try again soon!';
         }
       } catch (err) {
+        drinkNameEl.textContent = '';
         drinkEl.textContent = 'Oops! Our espresso machine hiccuped.';
         errorEl.textContent = 'Error: ' + err.message;
       } finally {
