@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Barista App</title>
 
-  <!-- Farcaster Mini App -->
-  <meta name="fc:miniapp" content='{"version":"1","imageUrl":"https://barista-lilac.vercel.app/barista-splash.png","button":{"title":"Coffee Time","action":{"type":"launch_miniapp","name":"Barista App","url":"https://barista-lilac.vercel.app","splashImageUrl":"https://barista-lilac.vercel.app/barista-splash.png","splashBackgroundColor":"#6F4E37"}}}' />
-
   <!-- Farcaster Frame -->
-  <meta name="fc:frame" content='{"version":"1","imageUrl":"https://barista-lilac.vercel.app/barista-splash.png","button":{"title":"Coffee Time","action":{"type":"launch_frame","name":"Barista App","url":"https://barista-lilac.vercel.app","splashImageUrl":"https://barista-lilac.vercel.app/barista-splash.png","splashBackgroundColor":"#6F4E37"}}}' />
+  <meta property="fc:frame" content="vNext" />
+  <meta property="fc:frame:image" content="https://barista-lilac.vercel.app/barista-splash.png" />
+  <meta property="fc:frame:button:1" content="Coffee Time" />
+  <meta property="fc:frame:button:1:action" content="link" />
+  <meta property="fc:frame:button:1:target" content="https://barista-lilac.vercel.app" />
 
   <!-- Open Graph for iMessage, Facebook, LinkedIn -->
   <meta property="og:title" content="Barista" />
@@ -263,14 +264,19 @@
     <div id="error"></div>
   </div>
 
-  <!-- ⭐ FIXED: Stable Farcaster SDK -->
+  <!-- Farcaster SDK -->
   <script src="https://cdn.farcaster.xyz/miniapp/v1"></script>
   <script>
-    const { sdk } = window.farcasterMiniApp;
-    sdk.actions.ready();
+    // Initialize Farcaster SDK when ready
+    window.addEventListener('load', () => {
+      if (window.farcasterMiniApp?.sdk) {
+        const { sdk } = window.farcasterMiniApp;
+        sdk.actions.ready();
+      }
+    });
   </script>
 
-  <!-- Your existing logic (unchanged) -->
+  <!-- Main App Logic -->
   <script>
     document.getElementById('orderBtn').addEventListener('click', async () => {
       const drinkNameEl = document.getElementById('drinkName');
@@ -292,8 +298,20 @@
 
       try {
         const params = new URLSearchParams({ drinkType, temperature, mood });
-        const res = await fetch(`/api/drink?${params}`);
+        // FIXED: Use full URL instead of relative path
+        const apiUrl = `https://barista-lilac.vercel.app/api/drink?${params}`;
+        console.log('Calling API:', apiUrl);
+        
+        const res = await fetch(apiUrl);
+        console.log('Response status:', res.status);
+        
         const text = await res.text();
+        console.log('Response text:', text);
+        
+        if (!res.ok) {
+          throw new Error(`API returned ${res.status}: ${text}`);
+        }
+        
         const data = JSON.parse(text);
 
         if (data.drinkName && data.order) {
@@ -302,10 +320,12 @@
           orderSection.style.display = 'block';
         } else if (data.error) {
           drinkNameEl.textContent = 'Error: ' + data.error;
+          errorEl.textContent = data.error;
         } else {
           drinkNameEl.textContent = 'Our barista is taking a break. Try again soon!';
         }
       } catch (err) {
+        console.error('Full error:', err);
         drinkNameEl.textContent = 'Oops! Our espresso machine hiccuped.';
         errorEl.textContent = 'Error: ' + err.message;
       } finally {
