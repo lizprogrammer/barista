@@ -4,8 +4,8 @@
     "version": "1",
     "iconUrl": "https://barista-lilac.vercel.app/icon.png",
     "homeUrl": "https://barista-lilac.vercel.app",
-    "imageUrl": "https://barista-lilac.vercel.app/coffee.png",
-    "splashImageUrl": "https://barista-lilac.vercel.app/icon.png",
+    "imageUrl": "https://barista-lilac.vercel.app/barista-splash.png", 
+    "splashImageUrl": "https://barista-lilac.vercel.app/barista-splash.png"
     "splashBackgroundColor": "#F5E6D3",
     "webhookUrl": "https://barista-lilac.vercel.app/api/drink",
     "subtitle": "Barista",
