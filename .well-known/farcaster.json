@@ -11,7 +11,8 @@
     "subtitle": "Barista",
     "description": "Barista",
     "primaryCategory": "social",
-    "ogImageUrl": "https://barista-lilac.vercel.app/barista-splash.png"
+    "ogImageUrl": "https://barista-lilac.vercel.app/barista-splash.png",
+    "buttonTitle": "Open Barista"
   },
   "accountAssociation": {
     "header": "eyJmaWQiOjIxMDI1OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDA4NUVlNjgxZTI1NEFhRjg3MzM4NjhjQmQ4OWEyQTljNDU2QTE3NkIifQ",
