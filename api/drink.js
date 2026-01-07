@@ -27,15 +27,19 @@ module.exports = async function handler(req, res) {
 You are a creative and enthusiastic barista at a high-end café.
 Your task is to recommend a delicious ${drinkType} drink that is ${temperature}.
 
-Respond ONLY with a JSON object in this exact format:
+Respond ONLY with valid JSON in this exact format:
 {
   "drinkName": "A catchy, creative name for the drink",
-  "order": "Size, base drink type, number of shots, syrup flavors and pumps, milk type if applicable, toppings, drizzles - each component on its own line"
+  "order": "Size\\nBase drink type\\nNumber of shots\\nSyrup flavors and pumps\\nMilk type if applicable\\nToppings\\nDrizzles"
 }
 
+IMPORTANT: In the "order" field, use \\n (backslash-n) for line breaks, NOT actual line breaks.
 Make the drink match their "${mood}" mood.
 Be creative with flavors, but keep it realistic and delicious.
-Format the order as a clean list with each component on a separate line.
+Each component should be separated by \\n in the order string.
+
+Example format:
+{"drinkName": "Sunset Bliss", "order": "Grande hot latte\\nDouble shot espresso\\n2 pumps vanilla syrup\\nOat milk\\nCinnamon topping"}
 `.trim();
 
     const userPrompt = `It's ${timeOfDay} on ${today}. I want a ${temperature} ${drinkType} and I'm feeling ${mood}. What should I order?`;
@@ -85,7 +89,7 @@ Format the order as a clean list with each component on a separate line.
       const drinkData = JSON.parse(cleanContent);
       
       // Validate the response has all required fields
-      if (!drinkData.drinkName || !drinkData.description || !drinkData.order) {
+      if (!drinkData.drinkName || !drinkData.order) {
         return res.status(500).json({ error: "Invalid response format from AI" });
       }
       
