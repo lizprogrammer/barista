@@ -5,5 +5,20 @@
       "destination": "https://api.farcaster.xyz/miniapps/hosted-manifest/019b94e4-81e3-4294-3351-604d6f2a5915",
       "permanent": false
     }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "ALLOWALL"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors *"
+        }
+      ]
+    }
   ]
 }
