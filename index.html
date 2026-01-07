@@ -251,7 +251,7 @@
 
     <div class="options-container">
       <div class="option-group">
-        <label class="option-label">Beverage Type</label>
+        <label for="drinkType" class="option-label">Beverage Type</label>
         <select id="drinkType">
           <option value="coffee">Coffee</option>
           <option value="tea">Tea</option>
@@ -259,7 +259,7 @@
       </div>
 
       <div class="option-group">
-        <label class="option-label">Temperature</label>
+        <label for="temperature" class="option-label">Temperature</label>
         <select id="temperature">
           <option value="hot">Hot</option>
           <option value="iced">Iced</option>
@@ -267,7 +267,7 @@
       </div>
 
       <div class="option-group">
-        <label class="option-label">Your Mood</label>
+        <label for="mood" class="option-label">Your Mood</label>
         <select id="mood">
           <option value="energetic">Energetic & Ready</option>
           <option value="cozy">Cozy & Relaxed</option>
@@ -297,27 +297,19 @@
     <div id="error"></div>
   </div>
 
-  <!-- Farcaster SDK - Correct URL -->
-  <script src="https://cdn.jsdelivr.net/npm/@farcaster/frame-sdk@0.0.5/dist/index.global.js"></script>
-  
   <script>
-    // Initialize Farcaster SDK
-    let farcasterSDK = null;
-    
-    async function initFarcaster() {
-      try {
-        if (window.FrameSDK) {
-          farcasterSDK = window.FrameSDK;
-          await farcasterSDK.actions.ready();
-          console.log('Farcaster SDK initialized');
+    // Manual Farcaster ready signal (no SDK needed)
+    window.addEventListener('load', () => {
+      // Send ready message to Farcaster parent
+      if (window.parent !== window) {
+        try {
+          window.parent.postMessage({ type: 'frame-ready' }, '*');
+          console.log('Sent frame-ready to Farcaster');
+        } catch (e) {
+          console.log('PostMessage failed:', e);
         }
-      } catch (e) {
-        console.log('Not in Farcaster or SDK failed:', e);
       }
-    }
-    
-    // Initialize on load
-    window.addEventListener('load', initFarcaster);
+    });
     
     // Simple check for Farcaster
     const isFarcaster = window.parent !== window || navigator.userAgent.includes('Farcaster');
