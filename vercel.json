@@ -1,17 +1,10 @@
+
 {
-  "headers": [
+  "redirects": [
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "ALLOWALL"
-        },
-        {
-          "key": "Content-Security-Policy",
-          "value": "frame-ancestors *"
-        }
-      ]
+      "source": "/.well-known/farcaster.json",
+      "destination": "https://api.farcaster.xyz/miniapps/hosted-manifest/019b9ae0-7fe0-9d01-0b51-2291c30a0d39",
+      "statusCode": 307
     }
   ]
 }
