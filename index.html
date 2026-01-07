@@ -5,42 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Barista App</title>
 
-  <meta name="fc:miniapp" content='{
-    "version":"1",
-    "imageUrl":"https://barista-chi.vercel.app/coffee.png",
-    "button":{
-      "title":"Coffee Time",
-      "action":{
-        "type":"launch_miniapp",
-        "name":"Barista App",
-        "url":"https://barista-chi.vercel.app",
-        "splashImageUrl":"https://barista-chi.vercel.app/coffee.png",
-        "splashBackgroundColor":"#6F4E37"
-      }
-    }
-  }' />
+  <!-- Farcaster Mini App -->
+  <meta name="fc:miniapp" content='{"version":"1","imageUrl":"https://barista-lilac.vercel.app/barista-splash.png","button":{"title":"Coffee Time","action":{"type":"launch_miniapp","name":"Barista App","url":"https://barista-lilac.vercel.app","splashImageUrl":"https://barista-lilac.vercel.app/barista-splash.png","splashBackgroundColor":"#6F4E37"}}}' />
 
-  <meta name="fc:frame" content='{
-    "version":"1",
-    "imageUrl":"https://barista-chi.vercel.app/coffee.png",
-    "button":{
-      "title":"Coffee Time",
-      "action":{
-        "type":"launch_frame",
-        "name":"Barista App",
-        "url":"https://barista-chi.vercel.app",
-        "splashImageUrl":"https://barista-chi.vercel.app/coffee.png",
-        "splashBackgroundColor":"#6F4E37"
-      }
-    }
-  }' />
+  <!-- Farcaster Frame -->
+  <meta name="fc:frame" content='{"version":"1","imageUrl":"https://barista-lilac.vercel.app/barista-splash.png","button":{"title":"Coffee Time","action":{"type":"launch_frame","name":"Barista App","url":"https://barista-lilac.vercel.app","splashImageUrl":"https://barista-lilac.vercel.app/barista-splash.png","splashBackgroundColor":"#6F4E37"}}}' />
+
   <!-- Open Graph for iMessage, Facebook, LinkedIn -->
   <meta property="og:title" content="Barista" />
   <meta property="og:description" content="Your AI-powered coffee assistant." />
   <meta property="og:image" content="https://barista-lilac.vercel.app/barista-splash.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Barista" />
@@ -307,7 +284,6 @@
       const errorEl = document.getElementById('error');
       const btn = document.getElementById('orderBtn');
 
-      // Get user selections
       const drinkType = document.getElementById('drinkType').value;
       const temperature = document.getElementById('temperature').value;
       const mood = document.getElementById('mood').value;
