@@ -30,13 +30,12 @@ Your task is to recommend a delicious ${drinkType} drink that is ${temperature}.
 Respond ONLY with a JSON object in this exact format:
 {
   "drinkName": "A catchy, creative name for the drink",
-  "description": "2-3 sentences describing what makes this drink special, including the base, key flavors, and why it matches their mood",
-  "order": "The exact order as you would say it to a barista (like Starbucks style), including size, base, shots, syrups/flavors, toppings, etc. Be specific and detailed."
+  "order": "Size, base drink type, number of shots, syrup flavors and pumps, milk type if applicable, toppings, drizzles - each component on its own line"
 }
 
 Make the drink match their "${mood}" mood.
 Be creative with flavors, but keep it realistic and delicious.
-The order should be detailed enough that any barista could make it.
+Format the order as a clean list with each component on a separate line.
 `.trim();
 
     const userPrompt = `It's ${timeOfDay} on ${today}. I want a ${temperature} ${drinkType} and I'm feeling ${mood}. What should I order?`;
