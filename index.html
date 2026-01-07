@@ -269,9 +269,8 @@
     <div class="drink-card">
       <div class="drink-label">Your Perfect Drink</div>
       <div id="drinkName" class="drink-name"></div>
-      <div id="drink" class="drink-text">Brewing your perfect drink...</div>
       <div class="order-section" id="orderSection" style="display: none;">
-        <div class="order-label">Order at the Counter</div>
+        <div class="order-label">Your Order</div>
         <div id="order" class="order-text"></div>
       </div>
     </div>
@@ -288,7 +287,6 @@
     sdk.actions.ready();
 
     document.getElementById('orderBtn').addEventListener('click', async () => {
-      const drinkEl = document.getElementById('drink');
       const drinkNameEl = document.getElementById('drinkName');
       const orderEl = document.getElementById('order');
       const orderSection = document.getElementById('orderSection');
@@ -301,8 +299,7 @@
       const temperature = document.getElementById('temperature').value;
       const mood = document.getElementById('mood').value;
 
-      drinkEl.textContent = 'Brewing your perfect drink...';
-      drinkNameEl.textContent = '';
+      drinkNameEl.textContent = 'Brewing your perfect drink...';
       orderSection.style.display = 'none';
       overlay.classList.add('show');
       btn.disabled = true;
@@ -314,21 +311,17 @@
         const text = await res.text();
         const data = JSON.parse(text);
 
-        if (data.drinkName && data.description && data.order) {
+        if (data.drinkName && data.order) {
           drinkNameEl.textContent = data.drinkName;
-          drinkEl.textContent = data.description;
           orderEl.textContent = data.order;
           orderSection.style.display = 'block';
         } else if (data.error) {
-          drinkNameEl.textContent = '';
-          drinkEl.textContent = 'Error: ' + data.error;
+          drinkNameEl.textContent = 'Error: ' + data.error;
         } else {
-          drinkNameEl.textContent = '';
-          drinkEl.textContent = 'Our barista is taking a break. Try again soon!';
+          drinkNameEl.textContent = 'Our barista is taking a break. Try again soon!';
         }
       } catch (err) {
-        drinkNameEl.textContent = '';
-        drinkEl.textContent = 'Oops! Our espresso machine hiccuped.';
+        drinkNameEl.textContent = 'Oops! Our espresso machine hiccuped.';
         errorEl.textContent = 'Error: ' + err.message;
       } finally {
         btn.disabled = false;
