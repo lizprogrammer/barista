@@ -178,14 +178,6 @@
       color: #FFB74D;
     }
 
-    .drink-text {
-      font-size: 1rem;
-      line-height: 1.6;
-      font-weight: 400;
-      color: #fff;
-      white-space: pre-line;
-    }
-
     .order-section {
       margin-top: 20px;
       padding-top: 20px;
@@ -271,11 +263,15 @@
     <div id="error"></div>
   </div>
 
-  <script type="module">
-    import { sdk } from 'https://esm.sh/@farcaster/miniapp-sdk';
-
+  <!-- ⭐ FIXED: Stable Farcaster SDK -->
+  <script src="https://cdn.farcaster.xyz/miniapp/v1"></script>
+  <script>
+    const { sdk } = window.farcasterMiniApp;
     sdk.actions.ready();
+  </script>
 
+  <!-- Your existing logic (unchanged) -->
+  <script>
     document.getElementById('orderBtn').addEventListener('click', async () => {
       const drinkNameEl = document.getElementById('drinkName');
       const orderEl = document.getElementById('order');
