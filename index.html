@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://barista-lilac.vercel.app https://api.groq.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://barista-lilac.vercel.app https://api.groq.com; frame-ancestors *;">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Barista App</title>
 
   <!-- Farcaster Frame -->
   <meta property="fc:frame" content="vNext" />
   <meta property="fc:frame:image" content="https://barista-lilac.vercel.app/barista-splash.png" />
-  <meta property="fc:frame:button:1" content="Open App" />
+  <meta property="fc:frame:button:1" content="Coffee Time" />
   <meta property="fc:frame:button:1:action" content="link" />
   <meta property="fc:frame:button:1:target" content="https://barista-lilac.vercel.app" />
 
@@ -17,38 +16,33 @@
   <meta property="og:title" content="Barista" />
   <meta property="og:description" content="Your AI-powered coffee assistant." />
   <meta property="og:image" content="https://barista-lilac.vercel.app/barista-splash.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Barista" />
+  <meta name="twitter:description" content="Your AI-powered coffee assistant." />
+  <meta name="twitter:image" content="https://barista-lilac.vercel.app/barista-splash.png" />
 
   <style>
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow-x: hidden;
-      position: fixed;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background: linear-gradient(135deg, #6F4E37 0%, #3E2723 100%);
       color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-      touch-action: pan-y;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 120px;
     }
 
     .app {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 20px 140px;
+      padding: 40px 20px 20px;
       text-align: center;
-      min-height: 100vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
     }
 
     .logo {
@@ -104,18 +98,12 @@
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFB74D' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      padding-right: 36px;
     }
 
     select:focus {
       outline: none;
       border-color: #FFB74D;
-      background-color: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.15);
     }
 
     select option {
@@ -130,7 +118,6 @@
       right: 0;
       padding: 14px 16px 18px;
       background: linear-gradient(to top, rgba(62, 39, 35, 0.98) 70%, transparent);
-      z-index: 50;
     }
 
     button {
@@ -146,31 +133,21 @@
       font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s;
-      touch-action: manipulation;
+      transition: transform 0.1s;
     }
 
-    button:active { 
-      transform: scale(0.97); 
-    }
-    
-    button:disabled { 
-      opacity: 0.6; 
-      cursor: not-allowed;
-      transform: none;
-    }
+    button:active { transform: scale(0.97); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.8);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
       z-index: 100;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
     }
 
     .overlay.show { display: flex; }
@@ -185,7 +162,6 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.6);
       max-height: 80vh;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
     }
 
     .drink-label {
@@ -238,8 +214,6 @@
       background: rgba(255, 183, 77, 0.2);
       color: #FFB74D;
       margin-top: 16px;
-      padding: 10px;
-      font-size: 0.9rem;
     }
   </style>
 </head>
@@ -299,24 +273,6 @@
   </div>
 
   <script>
-    // Manual Farcaster ready signal (no SDK needed)
-    window.addEventListener('load', () => {
-      // Send ready message to Farcaster parent
-      if (window.parent !== window) {
-        try {
-          window.parent.postMessage({ type: 'frame-ready' }, '*');
-          console.log('Sent frame-ready to Farcaster');
-        } catch (e) {
-          console.log('PostMessage failed:', e);
-        }
-      }
-    });
-    
-    // Simple check for Farcaster
-    const isFarcaster = window.parent !== window || navigator.userAgent.includes('Farcaster');
-    console.log('Running in Farcaster:', isFarcaster);
-    console.log('User Agent:', navigator.userAgent);
-
     document.getElementById('orderBtn').addEventListener('click', async () => {
       const drinkNameEl = document.getElementById('drinkName');
       const orderEl = document.getElementById('order');
@@ -337,25 +293,8 @@
 
       try {
         const params = new URLSearchParams({ drinkType, temperature, mood });
-        const apiUrl = `https://barista-lilac.vercel.app/api/drink?${params}`;
-        console.log('Calling API:', apiUrl);
-        
-        const res = await fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        
-        console.log('Response status:', res.status);
-        
+        const res = await fetch(`https://barista-lilac.vercel.app/api/drink?${params}`);
         const text = await res.text();
-        console.log('Response text:', text);
-        
-        if (!res.ok) {
-          throw new Error(`API returned ${res.status}: ${text}`);
-        }
-        
         const data = JSON.parse(text);
 
         if (data.drinkName && data.order) {
@@ -364,12 +303,10 @@
           orderSection.style.display = 'block';
         } else if (data.error) {
           drinkNameEl.textContent = 'Error: ' + data.error;
-          errorEl.textContent = data.error;
         } else {
           drinkNameEl.textContent = 'Our barista is taking a break. Try again soon!';
         }
       } catch (err) {
-        console.error('Full error:', err);
         drinkNameEl.textContent = 'Oops! Our espresso machine hiccuped.';
         errorEl.textContent = 'Error: ' + err.message;
       } finally {
@@ -377,7 +314,6 @@
       }
     });
 
-    // Close overlay on background click
     document.getElementById('overlay').addEventListener('click', e => {
       if (e.target === e.currentTarget) {
         e.currentTarget.classList.remove('show');
