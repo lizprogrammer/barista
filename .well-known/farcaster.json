@@ -4,14 +4,14 @@
     "version": "1",
     "iconUrl": "https://barista-lilac.vercel.app/icon.png",
     "homeUrl": "https://barista-lilac.vercel.app",
-    "imageUrl": "https://barista-lilac.vercel.app/barista-splash.png", 
-    "splashImageUrl": "https://barista-lilac.vercel.app/barista-splash.png"
+    "imageUrl": "https://barista-lilac.vercel.app/barista-splash.png",
+    "splashImageUrl": "https://barista-lilac.vercel.app/barista-splash.png",
     "splashBackgroundColor": "#F5E6D3",
     "webhookUrl": "https://barista-lilac.vercel.app/api/drink",
     "subtitle": "Barista",
     "description": "Barista",
     "primaryCategory": "social",
-    "ogImageUrl": "https://barista-lilac.vercel.app/coffee.png"
+    "ogImageUrl": "https://barista-lilac.vercel.app/barista-splash.png"
   },
   "accountAssociation": {
     "header": "eyJmaWQiOjIxMDI1OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDA4NUVlNjgxZTI1NEFhRjg3MzM4NjhjQmQ4OWEyQTljNDU2QTE3NkIifQ",
