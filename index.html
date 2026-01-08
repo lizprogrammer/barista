@@ -8,14 +8,14 @@
   <!-- Farcaster Frame -->
 <meta name="fc:miniapp" content='{
     "version":"1",
-    "imageUrl":"https://barista-chi.vercel.app/coffee.png",
+    "imageUrl":"https://barista-lilac.vercel.app/coffee.png",
     "button":{
       "title":"Coffee Time",
       "action":{
         "type":"launch_miniapp",
         "name":"Barista App",
-        "url":"https://barista-chi.vercel.app",
-        "splashImageUrl":"https://barista-chi.vercel.app/coffee.png",
+        "url":"https://barista-lilac.vercel.app",
+        "splashImageUrl":"https://barista-lilac.vercel.app/coffee.png",
         "splashBackgroundColor":"#6F4E37"
       }
     }
@@ -23,14 +23,14 @@
 
   <meta name="fc:frame" content='{
     "version":"1",
-    "imageUrl":"https://barista-chi.vercel.app/coffee.png",
+    "imageUrl":"https://barista-lilac.vercel.app/coffee.png",
     "button":{
       "title":"Coffee Time",
       "action":{
         "type":"launch_frame",
         "name":"Barista App",
-        "url":"https://barista-chi.vercel.app",
-        "splashImageUrl":"https://barista-chi.vercel.app/coffee.png",
+        "url":"https://barista-lilac.vercel.app",
+        "splashImageUrl":"https://barista-lilac.vercel.app/coffee.png",
         "splashBackgroundColor":"#6F4E37"
       }
     }
@@ -296,6 +296,10 @@
   </div>
 
   <script>
+    import { sdk } from 'https://esm.sh/@farcaster/miniapp-sdk';
+
+    sdk.actions.ready();
+
     document.getElementById('orderBtn').addEventListener('click', async () => {
       const drinkNameEl = document.getElementById('drinkName');
       const orderEl = document.getElementById('order');
