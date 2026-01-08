@@ -104,18 +104,21 @@ module.exports = async function handler(req, res) {
 
     // USER PROMPT — FIXED (your original version was broken)
     const userPrompt = `
-      I need a ${temperature} ${drinkType} recommendation for ${timeOfDay} on ${today}. Please match the "${mood}" mood and keep the drink delicious but not overly sweet.
-  
-    MY VIBE: ${mood}
+    I need a ${temperature} ${drinkType} that matches the "${mood}" mood.
     
-    Create a drink that perfectly matches my vibe and the time of day. Consider:
-    - If it's morning, I might need more caffeine
-    - If it's afternoon, maybe something refreshing or indulgent
-    - If it's evening, perhaps something lighter or decaf
-    - Match the flavor intensity and sweetness to my vibe
-    - IMPORTANT: Avoid defaulting to vanilla and caramel - be creative with other flavors
+    Please choose ingredients that:
+    - fit the mood lane
+    - taste delicious and balanced
+    - follow Starbucks realism
+    - avoid being overly sweet unless the mood calls for it
     
-    Give me something unique that I wouldn't think to order myself but will absolutely love.
+    TIME OF DAY CONTEXT:
+    It's ${timeOfDay} on ${today}, so adjust caffeine and richness appropriately:
+    - Morning → stronger or more energizing
+    - Afternoon → balanced or refreshing
+    - Evening → lighter or decaf-friendly
+    
+    Give me a drink that fits my vibe, feels intentional, and is something I’d genuinely love but wouldn’t think to order myself.
     `.trim();
 
     // API CALL
