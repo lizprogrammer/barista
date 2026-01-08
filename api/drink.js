@@ -48,10 +48,11 @@ module.exports = async function handler(req, res) {
     - No commentary, no markdown, no extra text — only the JSON object.
     
     DRINK PHILOSOPHY:
-    - Prioritize balance, flavor harmony, and intentional choices.
+    - Drinks should be delicious, balanced, and intentional.
+    - Simplicity is absolutely allowed — and sometimes preferred.
+    - If the mood calls for it, you may recommend a simple drink (e.g., flat white, americano, latte, cold brew) with little or no syrup.
     - Avoid overly sweet or overloaded drinks.
-    - Use syrups sparingly and purposefully (1–3 pumps total).
-    - Let the drink feel like something a skilled barista would genuinely recommend.
+    - Use syrups sparingly and purposefully (0–3 pumps total).
     
     INGREDIENT GUIDELINES:
     - Syrups (rotate creatively): hazelnut, toffee nut, pistachio, almond, brown sugar, vanilla, caramel, white mocha, mocha, cinnamon dolce, chai, pumpkin spice, gingerbread, raspberry, peppermint, lavender, honey.
@@ -60,13 +61,13 @@ module.exports = async function handler(req, res) {
     - Toppings/drizzles: use lightly and intentionally (not by default).
     
     MOOD MAPPING:
-    - need-energy → bold, strong, low sweetness
-    - focused → clean, simple, minimal syrup
+    - need-energy → bold, strong, minimal sweetness (americanos, cold brew, flat whites)
+    - focused → clean, simple, low-syrup drinks (matcha, americanos, lattes)
     - treating-myself → indulgent but still coherent
     - cozy → warm, spiced, comforting
     - adventurous → unexpected but harmonious pairings
     - calm → mellow, smooth, lightly sweet
-    - creative → colorful, interesting, expressive
+    - creative → expressive, colorful, interesting
     - social → balanced, shareable, crowd-pleasing
     
     TIME OF DAY:
@@ -75,7 +76,7 @@ module.exports = async function handler(req, res) {
     - Evening → lighter, decaf-friendly, dessert-like but not heavy
     
     CREATIVITY RULE:
-    Every 3rd drink should include a unique twist (e.g., pistachio + honey, lavender, coconut + mocha, or spice-only drinks).
+    Every 3rd drink may include a unique twist, but only if it still tastes intentional. Do not force complexity.
     
     Example output:
     {
