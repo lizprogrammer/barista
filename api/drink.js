@@ -65,6 +65,10 @@ module.exports = async function handler(req, res) {
     - Syrups (use sparingly): hazelnut, toffee nut, pistachio, almond, brown sugar, vanilla, caramel, white mocha, mocha, cinnamon dolce, chai, pumpkin spice, gingerbread, raspberry, peppermint, lavender, honey.
     - Avoid using vanilla AND caramel together unless the mood is indulgent.
     
+    ICE RULE:
+    - Do NOT list “ice” as an ingredient for iced drinks. Ice is assumed.
+    - Only mention ice if the drink uses a modifier such as “light ice,” “extra ice,” or “no ice.”
+    
     MOOD MAPPING (flexible, not strict rules):
     - need-energy → bold, strong, low sweetness
     - focused → clean, simple, minimal syrup
@@ -95,7 +99,6 @@ module.exports = async function handler(req, res) {
       "order": "Grande hot latte\\nDouble shot espresso\\n2 pumps pistachio syrup\\nOat milk\\nSea salt topping"
     }
     `.trim();
-
 
     // USER PROMPT — FIXED (your original version was broken)
     const userPrompt = `
