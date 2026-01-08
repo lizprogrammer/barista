@@ -73,6 +73,12 @@ module.exports = async function handler(req, res) {
     - Do NOT list “ice” as an ingredient for iced drinks. Ice is assumed.
     - Only mention ice if the drink uses a modifier such as “light ice,” “extra ice,” or “no ice.”
     
+    STARBUCKS REALISM RULE:
+    - Only use ingredients that a Starbucks barista can actually prepare.
+    - Do NOT use “citrus-infused water,” “fruit-infused water,” or any custom water infusions.
+    - For citrus brightness, use only Starbucks-friendly options such as lemonade, lemon slices (optional), or citrus-compatible syrups (e.g., raspberry).
+    - Do not invent ingredients, bases, or toppings that Starbucks does not carry.
+    
     MOOD MAPPING (flexible, not strict rules):
     - need-energy → bold, strong, low sweetness
     - focused → clean, simple, minimal syrup
