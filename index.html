@@ -5,25 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Barista App</title>
 
-  <!-- Farcaster Frame -->
-  <meta property="fc:frame" content="vNext" />
-  <meta property="fc:frame:image" content="https://barista-lilac.vercel.app/barista-splash.png" />
-  <meta property="fc:frame:button:1" content="Coffee Time" />
-  <meta property="fc:frame:button:1:action" content="link" />
-  <meta property="fc:frame:button:1:target" content="https://barista-lilac.vercel.app" />
+  <meta name="fc:miniapp" content='{
+    "version":"1",
+    "imageUrl":"https://barista-chi.vercel.app/coffee.png",
+    "button":{
+      "title":"Coffee Time",
+      "action":{
+        "type":"launch_miniapp",
+        "name":"Barista App",
+        "url":"https://barista-chi.vercel.app",
+        "splashImageUrl":"https://barista-chi.vercel.app/coffee.png",
+        "splashBackgroundColor":"#6F4E37"
+      }
+    }
+  }' />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Barista" />
-  <meta property="og:description" content="Your AI-powered coffee assistant." />
-  <meta property="og:image" content="https://barista-lilac.vercel.app/barista-splash.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Barista" />
-  <meta name="twitter:description" content="Your AI-powered coffee assistant." />
-  <meta name="twitter:image" content="https://barista-lilac.vercel.app/barista-splash.png" />
+  <meta name="fc:frame" content='{
+    "version":"1",
+    "imageUrl":"https://barista-chi.vercel.app/coffee.png",
+    "button":{
+      "title":"Coffee Time",
+      "action":{
+        "type":"launch_frame",
+        "name":"Barista App",
+        "url":"https://barista-chi.vercel.app",
+        "splashImageUrl":"https://barista-chi.vercel.app/coffee.png",
+        "splashBackgroundColor":"#6F4E37"
+      }
+    }
+  }' />
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -84,7 +94,6 @@
       letter-spacing: 0.05em;
       opacity: 0.9;
       color: #FFB74D;
-      text-align: left;
     }
 
     select {
@@ -180,6 +189,14 @@
       color: #FFB74D;
     }
 
+    .drink-text {
+      font-size: 1rem;
+      line-height: 1.6;
+      font-weight: 400;
+      color: #fff;
+      white-space: pre-line;
+    }
+
     .order-section {
       margin-top: 20px;
       padding-top: 20px;
@@ -209,12 +226,6 @@
       text-align: center;
       margin-top: 8px;
     }
-
-    .close-btn {
-      background: rgba(255, 183, 77, 0.2);
-      color: #FFB74D;
-      margin-top: 16px;
-    }
   </style>
 </head>
 
@@ -226,7 +237,7 @@
 
     <div class="options-container">
       <div class="option-group">
-        <label for="drinkType" class="option-label">Beverage Type</label>
+        <label class="option-label">Beverage Type</label>
         <select id="drinkType">
           <option value="coffee">Coffee</option>
           <option value="tea">Tea</option>
@@ -234,7 +245,7 @@
       </div>
 
       <div class="option-group">
-        <label for="temperature" class="option-label">Temperature</label>
+        <label class="option-label">Temperature</label>
         <select id="temperature">
           <option value="hot">Hot</option>
           <option value="iced">Iced</option>
@@ -242,7 +253,7 @@
       </div>
 
       <div class="option-group">
-        <label for="mood" class="option-label">Your Mood</label>
+        <label class="option-label">Your Mood</label>
         <select id="mood">
           <option value="energetic">Energetic & Ready</option>
           <option value="cozy">Cozy & Relaxed</option>
@@ -263,7 +274,6 @@
         <div class="order-label">Your Order</div>
         <div id="order" class="order-text"></div>
       </div>
-      <button class="close-btn" onclick="document.getElementById('overlay').classList.remove('show')">Close</button>
     </div>
   </div>
 
@@ -272,7 +282,11 @@
     <div id="error"></div>
   </div>
 
-  <script>
+  <script type="module">
+    import { sdk } from 'https://esm.sh/@farcaster/miniapp-sdk';
+
+    sdk.actions.ready();
+
     document.getElementById('orderBtn').addEventListener('click', async () => {
       const drinkNameEl = document.getElementById('drinkName');
       const orderEl = document.getElementById('order');
@@ -281,6 +295,7 @@
       const errorEl = document.getElementById('error');
       const btn = document.getElementById('orderBtn');
 
+      // Get user selections
       const drinkType = document.getElementById('drinkType').value;
       const temperature = document.getElementById('temperature').value;
       const mood = document.getElementById('mood').value;
@@ -293,7 +308,7 @@
 
       try {
         const params = new URLSearchParams({ drinkType, temperature, mood });
-        const res = await fetch(`https://barista-lilac.vercel.app/api/drink?${params}`);
+        const res = await fetch(`/api/drink?${params}`);
         const text = await res.text();
         const data = JSON.parse(text);
 
