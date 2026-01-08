@@ -54,7 +54,7 @@ SYRUPS - ROTATE THESE, DON'T DEFAULT TO VANILLA/CARAMEL:
 - Sweet: vanilla, caramel, brown sugar, white mocha, mocha
 - Spiced: cinnamon dolce, chai, pumpkin spice, gingerbread (seasonal)
 - Fruity: raspberry, peppermint, lavender, honey
-- RULE: Avoid using vanilla OR caramel unless the mood specifically calls for "sweet" or "classic"
+- RULE: Avoid using vanilla AND caramel unless the mood specifically calls for "indulgent" or "treat yourself"
 
 MILK OPTIONS - MIX IT UP:
 - Dairy: whole, 2%, nonfat, heavy cream
