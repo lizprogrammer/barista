@@ -54,7 +54,11 @@ module.exports = async function handler(req, res) {
     
     NAME RULE:
     - The drink name must accurately reflect the drink’s actual flavor profile, ingredients, temperature, and overall vibe.
-    - Do NOT use names that imply flavors or ingredients that are not present (e.g., “Citrus” with no citrus, “Mocha” with no chocolate).
+    - Do NOT use names that imply flavors or ingredients that are not present (e.g., “Citrus” with no citrus, “Mocha” with no chocolate, “Berry” with no fruit).
+    - Names must be directly inspired by the real ingredients used.
+    - If the drink contains warm, cozy flavors (hazelnut, brown sugar, cinnamon, honey), the name should reflect warmth — not brightness or fruitiness.
+    - If the drink contains bright or fruity flavors (lemon, raspberry, citrus, mint), the name may reflect brightness.
+    - If the drink is iced, the name may reference coolness, but only if it fits the flavor profile.
     - Names should feel intentional, fitting, and aligned with the mood and taste experience.
     - Creativity is welcome, but clarity and accuracy come first.
     
