@@ -18,8 +18,24 @@ module.exports = async function handler(req, res) {
       return res.status(500).json({ error: "Missing GROQ_API_KEY" });
     }
 
-    // Query params
-    const { drinkType = "coffee", temperature = "hot", mood = "need-energy" } = req.query;
+    // Query params (raw from UI)
+    const {
+      drinkType = "coffee",
+      temperature = "hot",
+      mood = "Energetic & Ready"
+    } = req.query;
+
+    // UI mood → canonical mood lane mapping
+    const moodMap = {
+      "Energetic & Ready": "ENERGETIC",
+      "Focused & Productive": "FOCUSED",
+      "Cozy & Relaxed": "COZY",
+      "Adventurous & Bold": "BOLD",
+      "Indulgent & Treat Yourself": "TREATING-MYSELF",
+      "Refreshed & Light": "REFRESHED & LIGHT"
+    };
+
+    const canonicalMood = moodMap[mood] || "ENERGETIC";
 
     // Time context
     const today = new Date().toLocaleDateString("en-US", {
@@ -31,7 +47,7 @@ module.exports = async function handler(req, res) {
     const hour = new Date().getHours();
     const timeOfDay = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
 
-    // SYSTEM PROMPT (UPDATED ONLY)
+    // SYSTEM PROMPT (UNCHANGED)
     const systemPrompt = `
 You are a skilled Starbucks-style barista. The user will provide ONLY:
 - mood
@@ -117,9 +133,9 @@ Example output:
 }
 `.trim();
 
-    // USER PROMPT (UNCHANGED)
+    // USER PROMPT (UPDATED ONLY WITH canonicalMood)
     const userPrompt = `
-I need a ${temperature} ${drinkType} that matches the "${mood}" mood.
+I need a ${temperature} ${drinkType} that matches the "${canonicalMood}" mood.
 
 Please choose ingredients that:
 - fit the mood lane
