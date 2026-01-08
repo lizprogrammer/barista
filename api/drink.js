@@ -50,59 +50,76 @@ CRITICAL FORMATTING:
 - Use \\n (backslash-n) for line breaks in the order field
 - First line MUST be a size: Tall, Grande, or Venti
 - Second line MUST be a valid base drink (see below)
+- Do NOT include "ice" as a line item (it's assumed in iced drinks)
+- Use specific pump counts (e.g., "2 pumps mocha") not "extra pump"
 
 VALID BASE DRINKS:
-Coffee (hot): Caffè Latte, Cappuccino, Flat White, Americano, Caffè Mocha, Caramel Macchiato, Pike Place Roast (brewed coffee)
-Coffee (iced): Iced Latte, Iced Americano, Iced Mocha, Iced Caramel Macchiato, Cold Brew, Iced Coffee
+Coffee (hot): Caffè Latte, Cappuccino, Flat White, Americano, Caffè Mocha, Caramel Macchiato, Pike Place Roast
+Coffee (iced): Iced Coffee, Iced Latte, Iced Americano, Iced Mocha, Iced Caramel Macchiato, Cold Brew
 Tea (hot): Chai Tea Latte, Green Tea Latte, Earl Grey Tea, Jade Citrus Mint Tea
 Tea (iced): Iced Chai Tea Latte, Iced Green Tea Latte, Iced Black Tea, Iced Passion Tango Tea
-Blended: Frappuccino (specify flavor: Mocha, Caramel, Vanilla, etc.)
+Blended: Mocha Frappuccino, Caramel Frappuccino, Vanilla Frappuccino, Coffee Frappuccino
 
 DRINK STRUCTURE RULES:
-1. NEVER add espresso shots to brewed coffee (Pike Place) - that's a different drink called a Red Eye
-2. NEVER use "steamed milk" in iced drinks - milk is cold in iced drinks
-3. Whipped cream goes on: Frappuccinos, Mochas, specialty drinks - NOT regular lattes or brewed coffee
-4. Cold foam goes on: Cold Brew, Iced Lattes, Iced Americanos - NOT hot drinks
-5. If you want an espresso drink with milk, order a Latte or Cappuccino (not brewed coffee + espresso)
-
-CORRECT EXAMPLES:
-✅ "Grande Caffè Latte\\nDouble shot\\n1 pump hazelnut\\n1 pump caramel\\nWhole milk"
-✅ "Venti Cold Brew\\nVanilla sweet cream cold foam"
-✅ "Grande Iced Caramel Macchiato\\nExtra shot\\nAlmond milk\\nExtra caramel drizzle"
-
-INCORRECT EXAMPLES:
-❌ "Venti hot coffee\\nSingle shot espresso..." (too vague, mixing brewed coffee with espresso)
-❌ "Grande Iced Latte\\nSteamed oat milk" (can't steam milk in iced drinks)
-❌ "Tall Americano\\nWhipped cream" (Americanos don't get whipped cream)
+1. NEVER add espresso shots to brewed coffee - use a Latte instead
+2. NEVER use "steamed milk" in iced drinks
+3. Whipped cream goes on: Frappuccinos, Mochas, specialty drinks
+4. Cold foam goes on: Cold Brew, Iced Lattes, Iced Americanos
+5. Do NOT list ice unless specifying a modification (light ice, no ice, extra ice)
 
 MOOD GUIDELINES:
-- need-energy: Strong espresso drinks (Americano, Cold Brew), extra shots, minimal sweetness
-- focused: Clean and simple (Americano, Pike Place, Iced Coffee with light syrup)
-- treating-myself: Indulgent (Mocha, Caramel Macchiato, Frappuccino with extras)
-- cozy: Warm spices (Chai, lattes with cinnamon dolce or brown sugar)
-- adventurous: Unique combinations (unusual syrup pairings, alternative milks)
-- calm: Gentle (tea lattes, lattes with honey, light sweetness)
-- creative: Fun flavors (raspberry, interesting combos)
-- social: Crowd-pleasers (Caramel Macchiato, Vanilla Latte, popular drinks)
+- need-energy: Strong, bold, minimal sweetness (Americano, Cold Brew, extra shots)
+- focused: Clean, simple, caffeine-forward (Americano, Pike Place, Iced Coffee with 1 syrup max)
+- treating-myself: Indulgent, sweet (Mocha, Caramel Macchiato, Frappuccino)
+- cozy: Warm spices that work together (Chai, brown sugar + cinnamon, honey + vanilla)
+- adventurous: Unexpected but DELICIOUS combinations (see rules below)
+- calm: Gentle, lightly sweet (tea lattes, honey, light vanilla)
+- creative: Interesting, fun (raspberry, unique pairings that taste good)
+- social: Popular, crowd-pleasing (Caramel Macchiato, Vanilla Latte)
+
+ADVENTUROUS DRINKS - SPECIAL RULES:
+"Adventurous" means INTERESTING + DELICIOUS, not random chaos.
+- Use unexpected but complementary flavors
+- Maximum 2 syrup flavors that work together
+- Think: "This is unique but I can imagine it tasting amazing"
+
+✅ GOOD adventurous combos:
+- Toffee nut + cinnamon dolce (nutty + spiced)
+- White mocha + peppermint (sweet + minty)
+- Raspberry + vanilla (fruity + smooth)
+- Hazelnut + mocha (nutty + chocolate)
+- Brown sugar + vanilla (caramel-like depth)
+
+❌ BAD adventurous combos (DON'T USE THESE):
+- Raspberry + coconut + mocha (too many competing flavors)
+- Peppermint + caramel + hazelnut (flavor chaos)
+- Chai + raspberry (spice + fruit clash)
+- Mocha + lemonade (chocolate + citrus clash)
+- Cinnamon + mint (warm spice + cool mint clash)
+
+MANDATORY TASTE TEST (CRITICAL):
+Before outputting, ask yourself these questions:
+1. Would a real person enjoy drinking this?
+2. Do the flavors complement or clash?
+3. Is there a clear flavor profile (sweet, nutty, spiced, fruity)?
+4. If using 2+ syrups, do they work together harmoniously?
+5. Would you personally order and enjoy this drink?
+
+If ANY answer is no or uncertain, simplify the drink until all answers are yes.
 
 RECIPE COMPLEXITY:
-- 50% simple drinks (2-3 modifications)
-- 40% moderate drinks (3-4 modifications)
-- 10% complex drinks (5+ modifications)
+- 60% simple drinks (1-2 modifications: "Grande Iced Coffee, 2 pumps vanilla")
+- 30% moderate drinks (3-4 modifications)
+- 10% complex drinks (5 modifications max)
 
-TASTE TEST:
-Before outputting, verify:
-- Base drink makes sense for temperature
-- Flavors complement each other
-- Structure is correct (no steamed milk in iced drinks, etc.)
-- It's something you could actually order and would taste good
+CORRECT EXAMPLES:
+{"drinkName": "Bold Kickstart", "order": "Grande Americano\\nTriple shot\\nSplash of oat milk"}
 
-Example outputs:
-{"drinkName": "Bold Morning Brew", "order": "Grande Americano\\nTriple shot\\nSplash of oat milk"}
+{"drinkName": "Cozy Spice", "order": "Venti Caffè Latte\\nDouble shot\\n2 pumps brown sugar\\n1 pump cinnamon dolce\\nOat milk"}
 
-{"drinkName": "Cozy Maple Dream", "order": "Venti Caffè Latte\\nDouble shot\\n2 pumps brown sugar\\n1 pump cinnamon dolce\\nOat milk\\nCinnamon powder"}
+{"drinkName": "Adventurous Mint", "order": "Grande Iced Mocha\\nDouble shot\\n1 pump white mocha\\n1 pump peppermint\\nAlmond milk"}
 
-{"drinkName": "Treat Yourself Mocha", "order": "Grande Iced Mocha\\nDouble shot\\n2 pumps white mocha\\nOat milk\\nVanilla sweet cream cold foam\\nMocha drizzle"}
+{"drinkName": "Creative Berry", "order": "Venti Iced Coffee\\n2 pumps raspberry\\n1 pump vanilla\\nCoconut milk"}
 `.trim();
 
     const userPrompt = `
@@ -110,7 +127,7 @@ Create a ${temperature} ${drinkType} for someone who is feeling: ${mood}
 
 Time: ${timeOfDay} on ${today}
 
-Make it delicious, realistic, and properly structured as a valid Starbucks order.
+IMPORTANT: The drink must be genuinely delicious. Don't just throw random flavors together - make sure they complement each other and create a cohesive taste experience.
 `.trim();
 
     // API CALL
@@ -126,8 +143,8 @@ Make it delicious, realistic, and properly structured as a valid Starbucks order
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt }
         ],
-        temperature: 0.75,
-        max_tokens: 400
+        temperature: 0.7,
+        max_tokens: 350
       }),
     });
 
