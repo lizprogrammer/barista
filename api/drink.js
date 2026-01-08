@@ -18,24 +18,12 @@ module.exports = async function handler(req, res) {
       return res.status(500).json({ error: "Missing GROQ_API_KEY" });
     }
 
-    // Query params (raw from UI)
+    // Query params from UI
     const {
       drinkType = "coffee",
       temperature = "hot",
-      mood = "Energetic & Ready"
+      mood = "need-energy"
     } = req.query;
-
-    // UI mood → canonical mood lane mapping
-    const moodMap = {
-      "Energetic & Ready": "ENERGETIC",
-      "Focused & Productive": "FOCUSED",
-      "Cozy & Relaxed": "COZY",
-      "Adventurous & Bold": "BOLD",
-      "Indulgent & Treat Yourself": "TREATING-MYSELF",
-      "Refreshed & Light": "REFRESHED & LIGHT"
-    };
-
-    const canonicalMood = moodMap[mood] || "ENERGETIC";
 
     // Time context
     const today = new Date().toLocaleDateString("en-US", {
@@ -47,109 +35,64 @@ module.exports = async function handler(req, res) {
     const hour = new Date().getHours();
     const timeOfDay = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
 
-    // SYSTEM PROMPT (UNCHANGED)
+    // SIMPLIFIED SYSTEM PROMPT
     const systemPrompt = `
-You are a skilled Starbucks-style barista. The user will provide ONLY:
-- mood
-- drinkType (coffee or tea)
-- temperature (hot or iced)
+You are an expert Starbucks barista who creates delicious, realistic drink recommendations.
 
-You must create a delicious, well-balanced drink that fits the mood, uses Starbucks-friendly ingredients, and feels intentional and realistic.
+Given a mood, drink type (coffee/tea), and temperature (hot/iced), create a Starbucks-style drink order.
 
 Respond ONLY with valid JSON in this exact format:
 {
-  "drinkName": "A catchy, accurate name (2–4 words)",
-  "order": "Size\\nBase drink type\\nShots if coffee\\nSyrups and pumps\\nMilk if used\\nToppings or drizzles"
+  "drinkName": "A catchy, creative name (2-4 words)",
+  "order": "Size\\nBase drink\\nShots/modifications\\nSyrups and pumps\\nMilk type\\nToppings and extras"
 }
 
-FORMATTING RULES:
-- Use \\n for line breaks (not real line breaks).
-- No commentary, no markdown, no extra text.
-- Do NOT list ice unless modified (light ice, extra ice, no ice).
-- The first line of the order must be a standard Starbucks size (Tall, Grande, or Venti).
+CRITICAL RULES:
+1. Use \\n (backslash-n) for line breaks in the order field, NOT actual line breaks
+2. Format the order EXACTLY how you'd say it at Starbucks
+3. First line must be a size: Tall, Grande, or Venti
+4. Only use real Starbucks ingredients - things that actually exist on a standard US Starbucks menu
+5. Mix simple recipes (2-3 ingredients) and complex recipes (5-6 ingredients)
+6. Every drink must taste DELICIOUS - no weird or unpalatable combinations
 
-STARBUCKS REALISM (TIGHTENED):
-- Assume a standard U.S. Starbucks menu with permanent items unless explicitly stated.
-- Only use ingredients Starbucks actually carries.
-- Do NOT invent syrups, powders, foams, drizzles, or flavorings.
-- Do NOT use tea syrups in coffee drinks or coffee syrups in tea drinks unless Starbucks actually uses them cross-category.
-- Do NOT create fictional combinations like "green tea syrup," "chai cold foam," or "espresso lemonade."
-- If an ingredient does not exist at Starbucks, you must replace it with the closest real ingredient that fits the mood lane.
+MOOD GUIDELINES:
+- need-energy: Bold, strong, caffeinated, minimal sweetness
+- focused: Clean, simple, caffeine-forward
+- treating-myself: Indulgent, sweet, extra toppings
+- cozy: Warm spices, comforting, smooth
+- adventurous: Unique combinations, interesting flavors
+- calm: Gentle, lightly sweet, mellow
+- creative: Colorful, inspiring, fun flavors
+- social: Crowd-pleasing, balanced, shareable
 
-REGIONAL INGREDIENT RULE:
-Some ingredients (e.g., lavender) are seasonal or region-dependent.
-If availability is uncertain, you must:
-- Avoid the ingredient
-- OR automatically substitute a widely available alternative (vanilla or honey)
-- Do NOT mention the substitution explicitly
+RECIPE VARIETY:
+- 40% simple drinks (basic latte with 1-2 modifications)
+- 40% moderate drinks (3-4 modifications)
+- 20% complex drinks (5+ modifications with multiple flavors)
 
-STRICT MOOD LANES:
-The mood determines the entire flavor direction. Stay inside the lane.
+TASTE TEST:
+Before outputting, ask yourself: "Would this actually taste good together?"
+- Don't mix clashing flavors (mint + cinnamon, lemonade + hazelnut, etc.)
+- Balance sweetness, strength, and texture
+- Make sure tea drinks use tea-appropriate ingredients
+- Make sure coffee drinks use coffee-appropriate ingredients
+- Choose ingredients that complement each other and match the mood
 
-REFRESHED & LIGHT:
-- Allowed: green tea, black tea, white tea, iced coffee (no extra shots), lemonade, raspberry, mint, honey, light vanilla, small splash almond milk.
-- Not allowed: hazelnut, brown sugar, cinnamon dolce, oat milk, whipped cream, cozy spices, quad shots, cold brew add-ons.
+Example outputs:
+{"drinkName": "Simple Energy", "order": "Grande iced americano\\nTriple shot\\nSplash of oat milk"}
 
-COZY:
-- Allowed: chai, cinnamon, brown sugar, hazelnut, oat milk, honey, warm spices, espresso, cold brew, steamed milks.
-- Not allowed: citrus, lemonade, mint, raspberry, bright fruit flavors.
+{"drinkName": "Cozy Comfort", "order": "Venti hot latte\\nDouble shot\\n2 pumps brown sugar\\n1 pump cinnamon dolce\\nOat milk\\nCinnamon powder on top"}
 
-ENERGETIC:
-- Allowed: cold brew, espresso, green tea, citrus, mint, raspberry, honey, bright flavors.
-- Not allowed: heavy milks, whipped cream, nutty syrups, brown sugar, cinnamon dolce.
-
-CALM:
-- Allowed: honey, oat milk, almond milk, matcha, chamomile, light vanilla.
-- Not allowed: citrus, strong coffee, bold spices, heavy sweetness.
-
-TREATING-MYSELF:
-- Allowed: mocha, caramel, vanilla, sweet cream, cold foam, indulgent combinations.
-- Not allowed: citrus, mint, lemonade, tea bases (unless dessert tea latte).
-
-TEA SAFETY:
-- For tea drinks, only use honey blend, vanilla syrup, or liquid cane sugar.
-- Do NOT use nutty, spicy, or dessert syrups in tea.
-
-NAME RULE:
-- Name must reflect the actual ingredients and vibe.
-- No names implying flavors not present (citrus, berry, mocha, tropical, etc.).
-- Cozy flavors → warm names. Bright flavors → bright names.
-
-DELICIOUSNESS CHECK (TIGHTENED):
-- Before outputting, ensure the drink is genuinely delicious and coherent.
-- Do NOT combine ingredients that naturally clash (e.g., nutty + lemonade, chai + citrus, mint + cozy spices).
-- Do NOT mix tea and coffee bases or syrups unless Starbucks actually does so.
-- No overly sweet, overly bitter, or chaotic combinations.
-- If the drink fails this check, adjust ingredients within the same mood lane until it is clearly delicious.
-
-CREATIVITY RULE:
-- You may create simple drinks or fancy drinks depending on the mood.
-- Creativity is allowed only inside the mood lane and Starbucks realism.
-
-Example output:
-{
-  "drinkName": "Honey Oat Latte",
-  "order": "Grande hot latte\\nDouble shot espresso\\n1 pump honey blend\\nOat milk"
-}
+{"drinkName": "Treat Yourself", "order": "Grande iced mocha\\nDouble shot\\n2 pumps white mocha\\nOat milk\\nVanilla sweet cream cold foam\\nMocha and caramel drizzle"}
 `.trim();
 
-    // USER PROMPT (UPDATED ONLY WITH canonicalMood)
+    // SIMPLIFIED USER PROMPT
     const userPrompt = `
-I need a ${temperature} ${drinkType} that matches the "${canonicalMood}" mood.
+Create a ${temperature} ${drinkType} for someone who is feeling: ${mood}
 
-Please choose ingredients that:
-- fit the mood lane
-- taste delicious and balanced
-- follow Starbucks realism
-- avoid being overly sweet unless the mood calls for it
+Time: ${timeOfDay} on ${today}
 
-TIME OF DAY CONTEXT:
-It's ${timeOfDay} on ${today}, so adjust caffeine and richness appropriately:
-- Morning → stronger or more energizing
-- Afternoon → balanced or refreshing
-- Evening → lighter or decaf-friendly
-
-Give me a drink that fits my vibe, feels intentional, and is something I’d genuinely love but wouldn’t think to order myself.
+Match the drink to their vibe. Make it delicious, realistic, and something they'd love.
 `.trim();
 
     // API CALL
@@ -165,8 +108,8 @@ Give me a drink that fits my vibe, feels intentional, and is something I’d gen
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt }
         ],
-        temperature: 0.8,
-        max_tokens: 500
+        temperature: 0.85,
+        max_tokens: 400
       }),
     });
 
