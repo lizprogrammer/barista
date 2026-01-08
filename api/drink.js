@@ -50,6 +50,13 @@ module.exports = async function handler(req, res) {
     - Creativity is encouraged, but never at the expense of flavor harmony.
     - Simple drinks are absolutely allowed when the mood calls for it (e.g., flat white, americano, iced green tea, cold brew).
     - Syrups and toppings should be used thoughtfully, not by default.
+    - Avoid overly sweet or overloaded drinks.
+    
+    NAME RULE:
+    - The drink name must accurately reflect the drink’s actual flavor profile, ingredients, temperature, and overall vibe.
+    - Do NOT use names that imply flavors or ingredients that are not present (e.g., “Citrus” with no citrus, “Mocha” with no chocolate).
+    - Names should feel intentional, fitting, and aligned with the mood and taste experience.
+    - Creativity is welcome, but clarity and accuracy come first.
     
     INGREDIENT AWARENESS:
     - Coffee drinks may include: espresso, cold brew, iced coffee, lattes, cappuccinos, macchiatos, mochas, flat whites.
@@ -69,8 +76,8 @@ module.exports = async function handler(req, res) {
     - social → balanced, shareable, crowd-pleasing
     
     TEMPERATURE & BASE LOGIC:
-    - If the drink is tea-based, choose flavors that complement tea (citrus, honey, lavender, raspberry, chai, etc.).
-    - If the drink is coffee-based, choose flavors that complement espresso (nutty, spiced, mocha, brown sugar, etc.).
+    - If the drink is tea-based, choose flavors that complement tea (citrus, honey, lavender, raspberry, chai).
+    - If the drink is coffee-based, choose flavors that complement espresso (nutty, spiced, mocha, brown sugar).
     - Hot drinks lean warm, creamy, or spiced.
     - Iced drinks lean refreshing, bright, or lightly sweet.
     
