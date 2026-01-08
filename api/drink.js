@@ -45,63 +45,66 @@ module.exports = async function handler(req, res) {
     - Use \\n (backslash-n) for line breaks — NOT actual line breaks.
     - No commentary, no markdown, no extra text — only the JSON object.
     
-    DRINK PHILOSOPHY:
-    - Drinks should taste intentional, balanced, and enjoyable.
-    - Creativity is encouraged, but never at the expense of flavor harmony.
-    - Simple drinks are absolutely allowed when the mood calls for it (e.g., flat white, americano, iced green tea, cold brew).
-    - Syrups and toppings should be used thoughtfully, not by default.
-    - Avoid overly sweet or overloaded drinks.
-    
-    NAME RULE:
-    - The drink name must accurately reflect the drink’s actual flavor profile, ingredients, temperature, and overall vibe.
-    - Do NOT use names that imply flavors or ingredients that are not present (e.g., “Citrus” with no citrus, “Mocha” with no chocolate, “Berry” with no fruit).
-    - Names must be directly inspired by the real ingredients used.
-    - If the drink contains warm, cozy flavors (hazelnut, brown sugar, cinnamon, honey), the name should reflect warmth — not brightness or fruitiness.
-    - If the drink contains bright or fruity flavors (lemon, raspberry, citrus, mint), the name may reflect brightness.
-    - If the drink is iced, the name may reference coolness, but only if it fits the flavor profile.
-    - Names should feel intentional, fitting, and aligned with the mood and taste experience.
-    - Creativity is welcome, but clarity and accuracy come first.
-    
-    INGREDIENT AWARENESS:
-    - Coffee drinks may include: espresso, cold brew, iced coffee, lattes, cappuccinos, macchiatos, mochas, flat whites.
-    - Tea drinks may include: black tea, green tea, chai, matcha, herbal blends.
-    - Milk options: whole, 2%, nonfat, oat, almond, coconut, soy, sweet cream, cold foam variations.
-    - Syrups (use sparingly): hazelnut, toffee nut, pistachio, almond, brown sugar, vanilla, caramel, white mocha, mocha, cinnamon dolce, chai, pumpkin spice, gingerbread, raspberry, peppermint, lavender, honey.
-    - Avoid using vanilla AND caramel together unless the mood is indulgent.
+    STARBUCKS REALISM RULE:
+    - Only use ingredients Starbucks actually carries.
+    - Do NOT use “citrus-infused water,” “fruit-infused water,” or any invented ingredients.
+    - For citrus brightness, only use lemonade, lemon slices (optional), or citrus-compatible syrups like raspberry.
+    - Do not invent bases, toppings, or syrups.
     
     ICE RULE:
     - Do NOT list “ice” as an ingredient for iced drinks. Ice is assumed.
-    - Only mention ice if the drink uses a modifier such as “light ice,” “extra ice,” or “no ice.”
+    - Only mention ice if modified (light ice, extra ice, no ice).
     
-    STARBUCKS REALISM RULE:
-    - Only use ingredients that a Starbucks barista can actually prepare.
-    - Do NOT use “citrus-infused water,” “fruit-infused water,” or any custom water infusions.
-    - For citrus brightness, use only Starbucks-friendly options such as lemonade, lemon slices (optional), or citrus-compatible syrups (e.g., raspberry).
-    - Do not invent ingredients, bases, or toppings that Starbucks does not carry.
+    STRICT MOOD ENFORCEMENT:
+    The mood determines the entire flavor direction. The drink must taste like the mood feels.
     
-    MOOD MAPPING (flexible, not strict rules):
-    - need-energy → bold, strong, low sweetness
-    - focused → clean, simple, minimal syrup
-    - treating-myself → indulgent but still coherent
-    - cozy → warm, spiced, comforting
-    - adventurous → unique but still delicious
-    - calm → mellow, smooth, lightly sweet
-    - creative → expressive, colorful, interesting
-    - social → balanced, shareable, crowd-pleasing
+    REFRESHED & LIGHT:
+    - Allowed: green tea, black tea, white tea, iced coffee (no extra shots), lemonade, raspberry, mint, honey, light vanilla, small splash almond milk.
+    - Not allowed: hazelnut, brown sugar, cinnamon dolce, oat milk, whipped cream, heavy milks, cozy spices, quad shots, cold brew add-ons.
     
-    TEMPERATURE & BASE LOGIC:
-    - If the drink is tea-based, choose flavors that complement tea (citrus, honey, lavender, raspberry, chai).
-    - If the drink is coffee-based, choose flavors that complement espresso (nutty, spiced, mocha, brown sugar).
-    - Hot drinks lean warm, creamy, or spiced.
-    - Iced drinks lean refreshing, bright, or lightly sweet.
+    COZY:
+    - Allowed: cinnamon, brown sugar, hazelnut, oat milk, chai, honey, warm spices, espresso, cold brew, steamed milks.
+    - Not allowed: citrus, lemonade, mint, raspberry, bright fruit flavors.
+    
+    ENERGETIC:
+    - Allowed: cold brew, espresso, green tea, citrus, mint, raspberry, honey, light sweetness, bright flavors.
+    - Not allowed: heavy milks, whipped cream, nutty syrups, brown sugar, cinnamon dolce.
+    
+    CALM:
+    - Allowed: lavender, honey, oat milk, almond milk, matcha, chamomile, light vanilla.
+    - Not allowed: citrus, strong coffee, bold spices, heavy sweetness.
+    
+    TREATING-MYSELF:
+    - Allowed: mocha, caramel, vanilla, sweet cream, cold foam, indulgent combinations.
+    - Not allowed: citrus, mint, lemonade, tea bases (unless dessert tea latte).
+    
+    NAME RULE:
+    - The drink name must accurately reflect the actual ingredients, temperature, and vibe.
+    - Do NOT use names implying flavors not present (citrus, berry, mocha, tropical, etc.).
+    - Names must be directly inspired by the real ingredients.
+    - Cozy flavors → warm names. Bright flavors → bright names. Iced drinks → cool names only if appropriate.
+    - Creativity is welcome, but accuracy comes first.
+    
+    INGREDIENT LOGIC:
+    - Coffee flavors must complement espresso (nutty, spiced, mocha, brown sugar).
+    - Tea flavors must complement tea (citrus, honey, lavender, raspberry, chai).
+    - Hot drinks lean warm/creamy/spiced; iced drinks lean bright/light/refreshing.
+    - Avoid vanilla AND caramel together unless indulgent mood.
     
     TIME OF DAY:
-    - Morning → stronger espresso, less sugar
-    - Afternoon → balanced, refreshing
-    - Evening → lighter, decaf-friendly, or dessert-like
+    - Morning → stronger espresso, less sugar.
+    - Afternoon → balanced, refreshing.
+    - Evening → lighter, decaf-friendly, or dessert-like.
+    
+    DELICIOUSNESS RULE (FINAL CHECK):
+    - Before finalizing, ensure the drink is genuinely enjoyable, balanced, and coherent.
+    - Do NOT output drinks that taste chaotic, clashing, overly sweet, overly bitter, or structurally strange.
+    - Do NOT combine ingredients that naturally conflict (e.g., nutty syrups with lemonade, chai with citrus, mint with heavy cozy flavors, matcha with caramel drizzle).
+    - Ensure the drink would realistically taste good to a wide range of Starbucks customers.
+    - If the drink fails this check, adjust ingredients *within the same mood lane* until it is clearly delicious.
     
     CREATIVITY RULE:
-    You may add a unique twist, but only if it enhances the drink — never force complexity.
+    You may add a unique twist, but only if it enhances the drink and stays within the strict mood lane.
     
     Example output:
     {
