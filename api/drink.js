@@ -148,10 +148,37 @@ IMPORTANT: The drink must be genuinely delicious. Don't just throw random flavor
       }),
     });
 
+    // Check for rate limit error
+    if (response.status === 429) {
+      console.log("Rate limit hit");
+      return res.status(200).json({
+        drinkName: "Our barista is taking a break!",
+        order: "We've reached our daily brew limit.\n\nCome back tomorrow for fresh recommendations!\n\n☕ See you soon!"
+      });
+    }
+
     if (!response.ok) {
       let errorMessage = "Groq API error";
       try {
         const errorData = await response.json();
+        
+        // Check if error message contains "Rate limit"
+        if (errorData.error && typeof errorData.error === 'string' && errorData.error.includes('Rate limit')) {
+          console.log("Rate limit detected in error message");
+          return res.status(200).json({
+            drinkName: "Our barista is taking a break!",
+            order: "We've reached our daily brew limit.\n\nCome back tomorrow for fresh recommendations!\n\n☕ See you soon!"
+          });
+        }
+        
+        if (errorData.error?.message && errorData.error.message.includes('Rate limit')) {
+          console.log("Rate limit detected in error.message");
+          return res.status(200).json({
+            drinkName: "Our barista is taking a break!",
+            order: "We've reached our daily brew limit.\n\nCome back tomorrow for fresh recommendations!\n\n☕ See you soon!"
+          });
+        }
+        
         errorMessage = errorData.error?.message || errorMessage;
       } catch {}
       return res.status(500).json({ error: errorMessage });
@@ -189,6 +216,15 @@ IMPORTANT: The drink must be genuinely delicious. Don't just throw random flavor
 
   } catch (err) {
     console.error("API Error:", err);
+    
+    // Catch any rate limit errors that slipped through
+    if (err.message && err.message.includes('Rate limit')) {
+      return res.status(200).json({
+        drinkName: "Our barista is taking a break!",
+        order: "We've reached our daily brew limit.\n\nCome back tomorrow for fresh recommendations!\n\n☕ See you soon!"
+      });
+    }
+    
     return res.status(500).json({ error: err.message });
   }
 };
