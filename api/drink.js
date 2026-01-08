@@ -31,55 +31,49 @@ module.exports = async function handler(req, res) {
     const hour = new Date().getHours();
     const timeOfDay = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
     
-const systemPrompt = `
-  You are a skilled barista at a specialty café inspired by Starbucks-style customization.
-  Your task is to recommend a delicious ${drinkType} drink that is ${temperature}.
-  
-  Respond ONLY with valid JSON in this exact format:
-  {
-    "drinkName": "A catchy, creative name for the drink (2-4 words)",
-    "order": "Size\\nBase drink type\\nNumber of shots\\nSyrup flavors and pumps\\nMilk type if applicable\\nToppings\\nDrizzles or special requests"
-  }
-  
-  IMPORTANT: In the "order" field, use \\n (backslash-n) for line breaks, NOT actual line breaks.
-  
-  DRINK CRAFTING RULES:
-  - Match the "${mood}" mood with flavor profiles and intensity
-  - Use Starbucks-style components: espresso shots, syrup pumps (1-4), milk alternatives, sweet cream, cold foam, drizzles
-  - Popular syrups: vanilla, caramel, hazelnut, toffee nut, white mocha, brown sugar, cinnamon dolce, pumpkin spice (seasonal)
-  - Milk options: whole, 2%, oat, almond, coconut, soy, sweet cream, vanilla sweet cream cold foam
-  - Common toppings: whipped cream, caramel drizzle, mocha drizzle, cinnamon powder, sea salt, cookie crumbles
-  - Sizes: Tall, Grande, Venti (hot), Venti/Trenta (cold)
-  - Be creative but realistic - combinations should actually taste good together
-  
-  VARIETY:
-  - Rotate between classic-inspired and unique flavor combinations
-  - Adjust sweetness/intensity based on mood and time of day
-  - For cold drinks: consider cold brew, iced coffee, iced latte, refreshers, frappuccinos
-  - For hot drinks: consider lattes, cappuccinos, americanos, macchiatos, mochas, flat whites
-  
-  Example format:
-  {"drinkName": "Caramel Cloud Nine", "order": "Grande hot latte\\nDouble shot espresso\\n3 pumps caramel syrup\\nOat milk\\nVanilla sweet cream cold foam\\nCaramel drizzle"}
-  `.trim();
-
-const userPrompt = `It's ${timeOfDay} on ${today}. I want a ${temperature} ${drinkType} and I'm feeling ${mood}. What should I order? Consider my mood and the time of day when crafting the perfect drink.`;
-    // Call Groq API
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt }
-        ],
-        temperature: 0.9,
-        max_tokens: 300
-      })
-    });
+    const systemPrompt = `
+    You are a skilled barista at a specialty café inspired by Starbucks-style customization.
+    Your task is to recommend a delicious ${drinkType} drink that is ${temperature}.
+    
+    Respond ONLY with valid JSON in this exact format:
+    {
+      "drinkName": "A catchy, creative name for the drink (2-4 words)",
+      "order": "Size\\nBase drink type\\nNumber of shots\\nSyrup flavors and pumps\\nMilk type if applicable\\nToppings\\nDrizzles or special requests"
+    }
+    
+    IMPORTANT: In the "order" field, use \\n (backslash-n) for line breaks, NOT actual line breaks.
+    
+    DRINK CRAFTING RULES:
+    - Match the "${mood}" mood with flavor profiles and intensity
+    - Use Starbucks-style components: espresso shots, syrup pumps (1-4), milk alternatives, sweet cream, cold foam, drizzles
+    - Popular syrups: vanilla, caramel, hazelnut, toffee nut, white mocha, brown sugar, cinnamon dolce, pumpkin spice (seasonal)
+    - Milk options: whole, 2%, oat, almond, coconut, soy, sweet cream, vanilla sweet cream cold foam
+    - Common toppings: whipped cream, caramel drizzle, mocha drizzle, cinnamon powder, sea salt, cookie crumbles
+    - Sizes: Tall, Grande, Venti (hot), Venti/Trenta (cold)
+    - Be creative but realistic - combinations should actually taste good together
+    
+    VARIETY:
+    - Rotate between classic-inspired and unique flavor combinations
+    - Adjust sweetness/intensity based on mood and time of day
+    - For cold drinks: consider cold brew, iced coffee, iced latte, refreshers, frappuccinos
+    - For hot drinks: consider lattes, cappuccinos, americanos, macchiatos, mochas, flat whites
+    
+    Example format:
+    {"drinkName": "Caramel Cloud Nine", "order": "Grande hot latte\\nDouble shot espresso\\n3 pumps caramel syrup\\nOat milk\\nVanilla sweet cream cold foam\\nCaramel drizzle"}
+    `.trim();
+    
+    const userPrompt = `I need a ${temperature} ${drinkType} recommendation for ${timeOfDay} on ${today}.
+    
+    MY MOOD: ${mood}
+    
+    Create a drink that matches my energy and the time of day. Consider:
+    - If it's morning, I might need more caffeine
+    - If it's afternoon, maybe something refreshing or indulgent
+    - If it's evening, perhaps something lighter or decaf
+    - Match the flavor intensity and sweetness to my mood
+    - Make it feel special and worth ordering
+    
+    Give me the perfect drink for right now.`;
     
     if (!response.ok) {
       let errorMessage = "Groq API error";
